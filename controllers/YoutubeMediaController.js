@@ -1,97 +1,122 @@
-const db = require("../database/database");
+const Media = require("../models/YoutubeMedia");
 
-exports.get = (req, res) => {
-  db.query("SELECT * FROM youtube_media", (err, result) => {
-    if (err) {
-      return res.status(400).json({
-        message: "something went wrong",
-      });
-    }
-    return res.status(200).json({
-      data: result,
-    });
-  });
-};
-
-exports.create = (req, res) => {
-  const { title, link } = req.body;
-
-  db.query(
-    "INSERT INTO youtube_media (title,link)  VALUES(?,?)",
-    [title, link],
-    (err, result) => {
-      if (err) {
-        return res.status(400).json({
-          message: `Something went wrong ${err}`,
-        });
-      }
-
-      return res.status(200).json({
-        message: "Data added successfully",
-        data: result,
-      });
-    }
-  );
-};
-
-exports.destroy  = (req, res) => {
-    // console.log(req.body);
-    const { id } = req.body;
-
-    
-    if (!id) {
-        return res.status(400).json({ message: 'Media ID is required', status: false });
-    }
-
- 
-    db.query('DELETE FROM youtube_media WHERE id=?', [id], (err, results) => {
-        if (err) {
-            console.error('Error deleting media:', err);
-            return res.status(500).json({ message: 'Something went wrong', status: false });
-        }
-        res.status(200).json({ message: 'Media deleted', status: true });
-    });
-};
-
-exports.edit = (req, res) => {
-    const { id } = req.params;
-    // console.log(req.params);
-
-    if (!id) {
-        return res.status(400).json({
-            message: "ID is required",
-            status: false
-        });
-    }
-
-    db.query("SELECT * FROM youtube_media WHERE id=?", [id], (err, result) => {
-        if (err) {
-            console.error('Database error:', err);
-            return res.status(500).json({
-                message: "Something went wrong while fetching media data",
-                status: false
-            });
-        }
-        return res.status(200).json({
-            data: result
-        });
-    });
-};
-
-
-exports.update = (req,res) => {
-    const {id,title,link} = req.body
-
-    db.query("UPDATE youtube_media SET title=?, link=? WHERE id=?",[title,link,id],(err,result)=>{
-        if(err){
-            return res.status(400).json({
-                message:"Something went wrong"
-            })
-        }
-
-        return res.status(200).json({
-            message:"Media Updated successfully",
-            data:result
-        })
+exports.get = async (req, res) => {
+  try {
+    const media = await Media.findAll();
+    res.status(200).json({
+      data: media,
+      status: true
     })
+  }
+  catch (err) {
+    res.status(400).json({
+      error: "Error fetching data"
+    });
+  }
+};
+
+exports.create = async (req, res) => {
+  const { title, link } = req.body;
+  try {
+    const newMedia = await Media.create({
+      title,
+      link
+    });
+    res.status(200).json({
+      "data": newMedia,
+      "message": "Media Created Successfully",
+      "status": true
+    })
+  }
+  catch (err) {
+    res.status(400).json({
+      "message": "Something went wrong " + err
+    })
+  }
+};
+
+exports.destroy = async (req, res) => {
+
+  const { id } = req.body;
+
+  try {
+    const deleteUser = await Media.destroy({
+      where: {
+        id: id
+      }
+    })
+
+    res.status(200).json({
+      "message": "Media Deleted Successfully",
+      "status": true
+    })
+  }
+  catch (err) {
+    res.status(400).json({
+      "message": "Something went wrong " + err
+    })
+  }
+
+
+};
+
+exports.edit = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const media = await Media.findByPk(id);
+
+    if (media) {
+      res.status(200).json({
+        "data": media,
+        "status": true
+      })
+    }
+    else {
+      res.status(400).json({
+        "message": "Media not found"
+      })
+    }
+  }
+  catch (err) {
+    res.status(400).json({
+      "message": "Something went wrong"
+    })
+  }
+};
+
+
+exports.update = async (req, res) => {
+  const { id, title, link } = req.body
+
+  try {
+    const media = await Media.findByPk(id);
+    if (media) {
+      await Media.update({
+        title: title,
+        link: link
+      },
+        {
+          where: {
+            id: id
+          }
+        }
+      )
+
+      res.status(200).json({
+        "message": "Media updated successfully",
+        "status": true
+      })
+    }
+    else {
+      res.status(400).json({
+        "message": "Media Not Found"
+      })
+    }
+  }
+  catch (err) {
+    res.status(400).json({
+      "message": "Something went wrong " + err
+    })
+  }
 }
