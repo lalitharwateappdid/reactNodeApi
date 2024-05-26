@@ -7,9 +7,10 @@ const cors = require('cors');
 app.use(bodyParser.json());
 
 
-// calling models here
-const YoutubeMedia = require("./models/YoutubeMedia");
+// calling models here to synchronize
 const sequelize = require("./database/database");
+require("./models/YoutubeMedia");
+require("./models/QuoteModel");
 
 // calling routes here
 const bookApiRoute = require("./routes/api/BookApi");
