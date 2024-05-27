@@ -1,97 +1,129 @@
-const db = require("../database/database");
+const SubCategory = require("../models/SubCategoryModel");
+const Category = require("../models/CategoryModel");
 
-exports.get = (req,res) => {
-    db.query("SELECT * FROM sub_categories ORDER BY id desc",(err,result)=>{
-        if(err){
-            return res.status(400).json({
-                "message":"Something went wrong" + err
-            })
-        }
-
+exports.get = async(req,res) => {
+    SubCategory.findAll({
+        include: [{
+          model: Category,
+          attributes: ["id","name"]
+        }]  
+      })
+      .then(subcategories => {
+        // Handle the retrieved subcategories data
         return res.status(200).json({
-            "data":result
+            "data":subcategories
         })
-    })
+      })
+      .catch(error => {
+        // Handle errors
+        res.status(400).json({
+            "data":error
+        })
+      });
 }
 
-exports.create = (req,res) => {
+exports.create = async(req,res) => {
     const {category_id,name,description} = req.body
-    console.log(req.body)
 
-    db.query("INSERT INTO sub_categories (category_id,name,description) VALUES(?,?,?)",[category_id,name,description],(err,result)=>{
-        if(err){
-            return res.status(400).json({
-                "message":"Something went wrong " + err
-            })
-        }
+    try{
+    const subcategory = await SubCategory.create({
+        categoryId:category_id,
+        name:name,
+        description:description,
+    })
 
-        return res.status(200).json({
-            "message":"Data Added Successfully!",
-        })
-    });
-}
-
-exports.destroy = (req,res) => {
-    const {id} = req.body;
-
-    db.query("DELETE FROM sub_categories WHERE id=?",[id],(err,result)=>{
-        if(err){
-            return res.status(400).json({
-                "message":"Something went wrong " +err
-            })
-        }
-
-        if(result.affectedRows ===0) {
-            return res.status(400).json({
-                "message":"Sub Category not found"
-            })
-        }
-
-        return res.status(200).json({
-            "message":"Data Deleted Successfully",
-        
-        })
-
-
+    res.status(200).json({
+        "message":"Sub Category Added Successfully",
+        "data":subcategory
     })
 }
+catch(err){
+    res.status(400).json({
+        "message":"Something went wrong " + err,
+    })
+}
+}
 
-exports.edit = (req,res) => {
+exports.destroy = async(req,res) => {
+    const {id} = req.body;
+    try{
+        const subcategory = await SubCategory.findByPk(id);
+
+        if(subcategory){
+            await Book.destroy({
+                where:{
+                    id:id
+                }
+            })
+            res.status(200).json({
+                "message":"Sub Category Deleted"
+            })
+        }
+        else{
+            res.status(400).json({
+                "message":"Sub Category Not found"
+            })
+        }
+    }
+    catch(err){
+        res.status(400).json({
+            "message":"Something went wrong " + err
+        })
+    }
+}
+
+exports.edit =  async(req,res) => {
     const {id} = req.params
 
-    db.query("SELECT * FROM sub_categories WHERE id=?",[id],(err,result)=>{
-        if(err){
-            return res.status(400).json({
-                "message":"Something went wrong " + err
+    try{
+        const subcategory = await SubCategory.findByPk(id);
+        if(subcategory){
+            res.status(200).json({
+                "data":subcategory
             })
         }
-
-        if(result.affectedRows ===0) {
-            return res.status(400).json({
-                "message":"Not Found"
+        else{
+            res.status(400).json({
+                "message":"Sub Category Not Found"
             })
         }
-
-        return res.status(200).json({
-            "message":"Data Updated Successfully!",
-            "data":result
+    }
+    catch(err){
+        res.status(400).json({
+            "message":"Something went wrong"
         })
-    })
+    }
+
 }
 
 
-exports.update = (req,res) => {
+exports.update = async(req,res) => {
     const {id,category_id,name,description} = req.params;
 
-    db.query("UPDATE sub_categories SET category_id=?,name=?,description=? WHERE id=?",[category_id,name,description,id],(err,result)=>{
-        if(err){
-            return res.status(400).json({
+    try{
+        const subcategory = await SubCategory.findByPk(id)
+        if(subcategory){
+            await SubCategory.update({
+                category_id:category_id,
+                name:name,
+                description:description
+            },
+            {
+                where:{
+                    id:id
+                }
+            }
+        )
+        }
+        else{
+            res.status(400).json({
                 "message":"Something went wrong " + err
             })
         }
-
-        return res.status(200).json({
-            "message":"Data Updated Successfully",
+    }
+    catch(err){
+        res.status(400).json({
+            "message" :"Something went wrong " + err
         })
-    })
+    }
 }

@@ -37,55 +37,80 @@ exports.create = (req, res) => {
     }
 }
 
-exports.destroy = (req, res) => {
+exports.destroy = async(req, res) => {
     const { id } = req.body;
 
-    db.query("DELETE  FROM quotes WHERE id=?", [id], (err, result) => {
-        if (err) {
-            return res.status(400).json({
-                "message": "Something went wrong " + err,
-                "status": false
+    try{
+        const quote = await Quote.findByPk(id);
+
+        if(quote){
+            await Quote.destroy({
+                where:{
+                    id:id
+                }
+            })
+
+            res.status(200).json({
+                "message":"Quote Deleted Successfully",
             })
         }
-
-        return res.status(200).json({
-            "message": "Quote deleted successfully",
-            "status": true
+        else{
+            res.status(400).json({
+                "message":"Quote not found"
+            })
+        }
+    }
+    catch(err){
+        res.status(400).json({
+            "message":"Something went wrong " + err
         })
-    })
+    }
 }
 
-exports.edit = (req, res) => {
+exports.edit = async(req, res) => {
     const { id } = req.params;
-    db.query("SELECT * FROM quotes WHERE id=?", [id], (err, result) => {
-        if (err) {
-            return res.status(200).json({
-                "message": "Something went wrong " + err
-            })
-        }
+    
+    try{
+        const quote = Quote.findByPk(id);
 
-        return res.status(200).json({
-            "data": result
+        res.status(200).json({
+            "data":quote
         })
-    })
+    }
+    catch(err){
+        res.status(400).json({
+            "message":"Something went wrong " + err
+        })
+    }
 
 }
 
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
     const { id, quote } = req.body
 
-    db.query("UPDATE quotes SET quote=? WHERE id=?", [quote, id], (err, result) => {
-        if (err) {
-            return res.status(400).json({
-                "message": "Something went wrong " + err
+    try{
+        const quote = await Quote.findByPk(id);
+
+        if(quote){
+            await Quote.update({
+                quote:quote
+            },{
+                where:{
+                    id:id 
+                }
             })
         }
-
-        return res.status(200).json({
-            "data": result,
-            "message": "Data Updated Successfully"
+        else{
+            res.status(400).json({
+                "message":"Something went wrong " + err
+            })
+        }
+    }
+    catch(err){
+        res.status(400).json({
+            "message":"Something went wrong " + err
         })
-    })
+    }
 }
 

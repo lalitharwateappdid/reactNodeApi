@@ -1,83 +1,112 @@
 const db = require("../database/database");
+const HomeContent = require("../models/HomeContentModel");
 
-exports.get = (req,res) => {
-    db.query("SELECT * FROM home_contents",(err,result)=>{
-        if(err){
-            return res.status(400).json({
-                "message":"Something went wrong " + err
-            })
+exports.get = async (req, res) => {
+  try {
+    const homecontent = await HomeContent.findAll();
+    res.status(200).json({
+      data: homecontent,
+      status: 200,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: "Something went wrong " + err,
+    });
+  }
+};
+
+exports.create = async (req, res) => {
+  const { image_path, description } = req.body;
+  try {
+    const homecontent = await HomeContent.create({
+      description: description,
+      image_path: image_path,
+    });
+
+    res.status(200).json({
+      message: "Home content added successfully",
+      data: homecontent,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: "Something went wrong " + err,
+    });
+  }
+};
+
+exports.edit = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const homecontent = await HomeContent.findByPk(id);
+
+    res.status(200).json({
+      data: homecontent,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: "Something went wrong " + err,
+    });
+  }
+};
+
+exports.update = async (req, res) => {
+  const { id, image_path, description } = req.body;
+
+  try {
+    const homecontent = await HomeContent.findByPk(id);
+
+    if (homecontent) {
+      await HomeContent.update(
+        {
+          description: description,
+          image_path: image_path,
+        },
+        {
+          where: {
+            id: id,
+          },
         }
+      );
+    } else {
+        res.status(400).json({
+            "message":"Home content not found"
+        })
+    }
+  } catch (err) {
+    res.status(400).json({
+      message: "Something went wrong " + err,
+    });
+  }
+};
 
-        return res.status(200).json({
-            "data":result
+exports.destroy = async(req, res) => {
+  const { id } = req.body;
+
+  try{
+    const homecontent = await HomeContent.findByPk(id);
+
+    if(homecontent){
+        await HomeContent.destroy({
+            where:{
+                id:id
+            }
         })
 
-    })
-}
-
-exports.create = (req,res) => {
-    const {image_path,description} = req.body
-
-    db.query("INSERT INTO home_contents(image_path,description) VALUES(?,?)",[image_path,description],(err,result)=>{
-        if(err){
-            return res.status(400).json({
-                "message":"Something went wrong "+err
-            })
-        }
-
-        return res.status(200).json({
-            "message":"Data Added Successfully",
-            "data":result
+        res.status(200).json({
+            "message":"Home content Deleted Successfully"
         })
-    })
-}
-
-exports.edit = (req,res) => {
-    const {id} = req.params
-
-    db.query("SELECT * FROM home_contents WHERE id=?",[id],(err,result)=>{
-        if(err){
-            return res.status(400).json({
-                "message":"Something went wrong "+err
-            });
-        }
-        
-        return res.status(200).json({
-            "data":result
+    }
+    else{
+        res.status(400).json({
+            "message":"Home Content Not Found"
         })
+    }
+  }
+  catch(err){
+    res.status(400).json({
+        "message":"Something went wrong " + err
     })
-}
-
-exports.update = (req,res) => {
-    const {id,image_path,description} = req.body
-
-    db.query("UPDATE home_contents SET image_path=?, description=? WHERE id=?",[image_path,description,id],(err,result)=>{
-        if(err){
-            return res.status(400).json({
-                "message":"Something went wrong " + err
-            })
-        }
-
-        return res.status(200).json({
-            "message":"Data Updated Successfully",
-            "data":result
-        })
-    })
-}
-
-exports.destroy = (req,res) => {
-    const {id} = req.body
-
-    db.query("DELETE FROM home_contents WHERE id=?",[id],(err,result)=>{
-        if(err){
-            return res.status(400).json({
-                "message":"Something went wrong " + err
-            })
-        }
-
-        return res.status(200).json({
-            "message":"Data deleted successfully"
-        })
-    })
-}
-
+  }
+  
+};
