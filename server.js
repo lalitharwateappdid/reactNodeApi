@@ -28,6 +28,7 @@ const SubCategoryApi = require("./routes/api/SubCategoryApi");
 const HomeContentApi = require("./routes/api/HomeContentApi");
 const EbookApi = require("./routes/api/EbookApi");
 const EventApi = require("./routes/api/EventApi");
+const UserApi = require("./routes/api/UserApi");
 
 
 // Middleware to parse JSON bodies
@@ -42,6 +43,7 @@ app.use("/api/sub-category/", SubCategoryApi);
 app.use("/api/home-content/", HomeContentApi);
 app.use("/api/ebook/",EbookApi);
 app.use("/api/events/",EventApi);
+app.use("/api/users/",UserApi);
 
 app.get('/api', (req, res) => {
     res.status(200).json({
