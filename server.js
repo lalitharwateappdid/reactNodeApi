@@ -29,6 +29,7 @@ const HomeContentApi = require("./routes/api/HomeContentApi");
 const EbookApi = require("./routes/api/EbookApi");
 const EventApi = require("./routes/api/EventApi");
 const UserApi = require("./routes/api/UserApi");
+const AuthApi = require("./routes/api/auth/AuthApi");
 
 
 // Middleware to parse JSON bodies
@@ -44,6 +45,7 @@ app.use("/api/home-content/", HomeContentApi);
 app.use("/api/ebook/",EbookApi);
 app.use("/api/events/",EventApi);
 app.use("/api/users/",UserApi);
+app.use("/api/auth/",AuthApi);
 
 app.get('/api', (req, res) => {
     res.status(200).json({
