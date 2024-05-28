@@ -1,4 +1,9 @@
 const Ebook = require("../models/EbookModel");
+const fileUpload = require("express-fileupload");
+const express = require("express");
+const app = express();
+app.use(fileUpload)
+app.use(express.static('public'));
 
 exports.get = async(req,res) => {
     try{
@@ -20,11 +25,12 @@ exports.create = async(req,res) => {
     const {name,description,author_name,cover_path,pdf_path} = req.body
     
     try{
+        // cover_path.mv(__dirname + '/cover_photo/'+cover_path.name)
         const ebook = await Ebook.create({
             name:name,
             description:description,
             authorName:author_name,
-            coverPath:cover_path,
+            coverPath:cover_path,   
             pdfPath:pdf_path
         })
 
