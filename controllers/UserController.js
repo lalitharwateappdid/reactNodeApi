@@ -1,12 +1,14 @@
 const User = require("../models/UserModel");
+const brcypt = require("bcrypt");
 
 
 exports.create = async(req,res) => {
     const {name,password,email} = req.body;
+    const saltRound = 10;
     try{
         await User.create({
             name:name,
-            password:password,
+            password:brcypt.hash(password,saltRound),
             email:email
         })
 
