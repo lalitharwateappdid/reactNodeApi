@@ -4,13 +4,9 @@ require("dotenv").config()
 const verifyToken = async(req,res,next) => {
     const token = req.headers.authorization;
    
-    if(!token){
-        res.status(400).json({
-            "message":"Access Denied. No token provided"
-        })
-    }
-
+    
     try{    
+        
         const splitToken = token.split(" ");
         const decoded_jwt_token = splitToken[1];
 

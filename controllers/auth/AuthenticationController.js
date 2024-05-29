@@ -1,5 +1,6 @@
 const User = require("../../models/UserModel");
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const bcrypt = require("bcrypt");
 
@@ -13,6 +14,8 @@ exports.login = async (req, res) => {
         email: email,
       },
     });
+
+    
 
     // logic if user not found
     if (!user) {
@@ -38,7 +41,7 @@ exports.login = async (req, res) => {
           userId: user.id,
           email: user.email,
         },
-        secret_key,
+        process.env.secret_key,
         { expiresIn: "10h" }
       );
 
@@ -49,7 +52,7 @@ exports.login = async (req, res) => {
     }
   } catch (err) {
     res.status(400).json({
-      message: "Something went wrong " + err,
+      message: "Something went wrong: " + err,
     });
   }
 };
