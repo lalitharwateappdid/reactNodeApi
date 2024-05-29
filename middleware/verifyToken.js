@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const secret_key = require("../config/secret_key");
+require("dotenv").config()
 
 const verifyToken = async(req,res,next) => {
     const token = req.headers.authorization;
@@ -14,7 +14,7 @@ const verifyToken = async(req,res,next) => {
         const splitToken = token.split(" ");
         const decoded_jwt_token = splitToken[1];
 
-        const decode = jwt.verify(decoded_jwt_token,secret_key)
+        const decode = jwt.verify(decoded_jwt_token,process.env.secret_key)
         // res.status(200).json({
         //     "token":decode
         // })
