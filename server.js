@@ -3,8 +3,11 @@ const bodyParser = require('body-parser');
 const express = require("express");
 const app = express();
 app.use(express.json())
+
 const cors = require('cors');
 app.use(bodyParser.json());
+
+app.use(cors());
 
 
 // calling models here to synchronize
@@ -34,7 +37,7 @@ const AuthApi = require("./routes/api/auth/AuthApi");
 
 // Middleware to parse JSON bodies
 // app.use(express.json());
-app.use(cors());
+
 
 app.use("/api/books/", bookApiRoute);
 app.use("/api/media/", YoutubeMediaApi);

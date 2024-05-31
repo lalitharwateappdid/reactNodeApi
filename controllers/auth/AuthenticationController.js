@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 
 exports.login = async (req, res) => {
   let token;
+  console.log(req.body)
   try {
     const { email, password } = req.body;
 
