@@ -50,7 +50,7 @@ exports.destroy = async(req,res) => {
         const subcategory = await SubCategory.findByPk(id);
 
         if(subcategory){
-            await Book.destroy({
+            await SubCategory.destroy({
                 where:{
                     id:id
                 }
@@ -98,7 +98,7 @@ exports.edit =  async(req,res) => {
 
 
 exports.update = async(req,res) => {
-    const {id,category_id,name,description} = req.params;
+    const {id,category_id,name,description} = req.body;
 
     try{
         const subcategory = await SubCategory.findByPk(id)
@@ -114,10 +114,14 @@ exports.update = async(req,res) => {
                 }
             }
         )
+
+        res.status(200).json({
+            "message":"Sub Category Added Successfully"
+        })
         }
         else{
             res.status(400).json({
-                "message":"Something went wrong " + err
+                "message":"Something went wrong"
             })
         }
     }

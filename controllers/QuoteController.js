@@ -71,7 +71,8 @@ exports.edit = async(req, res) => {
     const { id } = req.params;
     
     try{
-        const quote = Quote.findByPk(id);
+        const quote = await Quote.findByPk(id);
+        console.log(quote)
 
         res.status(200).json({
             "data":quote
@@ -90,15 +91,20 @@ exports.update = async (req, res) => {
     const { id, quote } = req.body
 
     try{
-        const quote = await Quote.findByPk(id);
-
-        if(quote){
+        const quoteupdate = await Quote.findByPk(id);
+      
+        if(quoteupdate){
             await Quote.update({
                 quote:quote
             },{
                 where:{
-                    id:id 
+                    id:quoteupdate.id 
                 }
+            })
+
+            res.status(200).json({
+                "quote":quoteupdate,
+                "message":"Quote Updated Successfully"
             })
         }
         else{

@@ -8,7 +8,7 @@ const verifyToken = async(req,res,next) => {
     try{    
         
         const splitToken = token.split(" ");
-        const decoded_jwt_token = splitToken[1];
+        const decoded_jwt_token = splitToksen[1];
 
         const decode = jwt.verify(decoded_jwt_token,process.env.secret_key)
         // res.status(200).json({

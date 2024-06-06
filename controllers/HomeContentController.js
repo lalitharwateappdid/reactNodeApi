@@ -17,6 +17,7 @@ exports.get = async (req, res) => {
 
 exports.create = async (req, res) => {
   const { image_path, description } = req.body;
+  console.log(req.body)
   try {
     const homecontent = await HomeContent.create({
       description: description,
@@ -68,6 +69,10 @@ exports.update = async (req, res) => {
           },
         }
       );
+
+      res.status(200).json({
+        "message":"Home Content Updated Successfully"
+      })
     } else {
         res.status(400).json({
             "message":"Home content not found"

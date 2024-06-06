@@ -43,6 +43,10 @@ exports.destroy = async(req, res) => {
                 id:id
             }
         })
+
+        res.status(200).json({
+          "message":"Book Deleted Successfullyhome"
+        })
   }
   catch(err){
     res.status(400).json({
@@ -69,7 +73,7 @@ exports.edit = async(req, res) => {
 };
 
 exports.update = async(req, res) => {
-  const { id, name, description, pages_in_book, price, status } = req.body;
+  const { id, name, description, pages_in_books, price, status } = req.body;
 
   try{
     const book = await Book.findByPk(id);
@@ -78,12 +82,16 @@ exports.update = async(req, res) => {
         await Book.update({
             name:name,
             description:description,
-            pages_in_book:pages_in_book,
+            pages_in_books:pages_in_books,
             price:price
         },{
             where:{
                 id:id
             }
+        })
+
+        res.status(200).json({
+          "message":"Book Updated Succesfully"
         })
     }
     else{
