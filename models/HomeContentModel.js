@@ -10,11 +10,11 @@ const HomeContent = sequelize.define("HomeContents",{
     },
     "description":{
         type:DataTypes.TEXT,
-        allowNull: true
+       
     },
     "image_path":{
         type:DataTypes.STRING,
-        allowNull:true
+        
     }
 })
 

@@ -16,12 +16,14 @@ exports.get = async (req, res) => {
 }
 
 exports.create = (req, res) => {
-    const { quote } = req.body
+    const { quote,day_of_year,year } = req.body
 
 
     try {
         const quotes = Quote.create({
-            quote: quote
+            quote: quote,
+            day_of_year:day_of_year,
+            year:year
         })
 
         res.status(200).json({

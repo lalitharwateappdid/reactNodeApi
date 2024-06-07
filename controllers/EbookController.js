@@ -22,16 +22,16 @@ exports.get = async(req,res) => {
 }
 
 exports.create = async(req,res) => {
-    const {name,description,author_name,cover_path,pdf_path} = req.body
+    const {name,description,authorName,coverPath,pdfPath} = req.body
     
     try{
         // cover_path.mv(__dirname + '/cover_photo/'+cover_path.name)
         const ebook = await Ebook.create({
             name:name,
             description:description,
-            authorName:author_name,
-            coverPath:cover_path,   
-            pdfPath:pdf_path
+            authorName:authorName,
+            coverPath:coverPath,   
+            pdfPath:pdfPath
         })
 
         res.status(200).json({
@@ -73,14 +73,14 @@ exports.edit = async(req,res) => {
 }
 
 exports.update = async(req,res) => {
-    const {id,name,description,author_name,cover_path,pdf_path} = req.body
+    const {id,name,description,authorName,coverPath,pdfPath} = req.body
     try{
         await Ebook.update({
             name:name,
             description: description,
-            authorName: author_name,
-            coverPath: cover_path,
-            pdfPath: pdf_path
+            authorName: authorName,
+            coverPath: coverPath,
+            pdfPath: pdfPath
         },{
             where:{
                 id:id

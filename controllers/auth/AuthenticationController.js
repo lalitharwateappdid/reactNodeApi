@@ -20,8 +20,9 @@ exports.login = async (req, res) => {
 
     // logic if user not found
     if (!user) {
-      return res.status(400).json({
+      res.status(400).json({
         message: "Invalid Email or Password",
+        statusMessage: false
       });
     } else {
       // getting stored user password from db
@@ -33,6 +34,7 @@ exports.login = async (req, res) => {
       if (!isPasswordValid) {
         res.status(400).json({
           message: "Password did not matched",
+          statusMessage:false
         });
       }
 

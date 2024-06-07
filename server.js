@@ -3,11 +3,11 @@ const bodyParser = require('body-parser');
 const express = require("express");
 const app = express();
 app.use(express.json())
-
 const cors = require('cors');
 app.use(bodyParser.json());
-
 app.use(cors());
+
+process.env.TZ ="Asia/Kolkata"
 
 
 // calling models here to synchronize
@@ -33,12 +33,11 @@ const EbookApi = require("./routes/api/EbookApi");
 const EventApi = require("./routes/api/EventApi");
 const UserApi = require("./routes/api/UserApi");
 const AuthApi = require("./routes/api/auth/AuthApi");
+const DashboardApi = require("./routes/api/DashboardApi");
 
 
-// Middleware to parse JSON bodies
-// app.use(express.json());
 
-
+// defining routes hhere
 app.use("/api/books/", bookApiRoute);
 app.use("/api/media/", YoutubeMediaApi);
 app.use("/api/quote/", QuoteApi);
@@ -49,6 +48,7 @@ app.use("/api/ebook/",EbookApi);
 app.use("/api/events/",EventApi);
 app.use("/api/users/",UserApi);
 app.use("/api/auth/",AuthApi);
+app.use("/api/dashboard/",DashboardApi);
 
 app.get('/api', (req, res) => {
     res.status(200).json({
@@ -59,7 +59,7 @@ app.get('/api', (req, res) => {
 
 
 // sychronize models
-sequelize.sync()
+sequelize.sync({alter: true})
     .then(() => {
         console.log("Database & tables created");
 

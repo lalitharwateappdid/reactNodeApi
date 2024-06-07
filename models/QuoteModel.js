@@ -11,6 +11,14 @@ const Quote = sequelize.define("Quotes", {
     quote: {
         type: DataTypes.TEXT,
         allowNull: true
+    },
+
+    day_of_year:{
+        type:DataTypes.INTEGER,
+    },
+
+    year:{
+        type:DataTypes.INTEGER
     }
 });
 

@@ -59,9 +59,9 @@ exports.update = async(req,res) => {
 
     try{
         await Event.update({
-            event_date:event_date,
+           event_date:event_date,
             event_name:event_name,
-            day:day,
+            day:day, 
         },{
             where:{
                 id:id
