@@ -5,6 +5,7 @@ const Media = require("../models/YoutubeMedia");
 const slider = require("../models/HomeContentModel");
 const categories = require("../models/CategoryModel");
 const subCategory = require("../models/SubCategoryModel");
+const Event = require("../models/EventModel");
 
 
 
@@ -16,6 +17,7 @@ exports.get = async(req,res) => {
         const media = await Media.count();
         const category = await categories.count();
         const subcategory = await subCategory.count();
+        const event = await Event.count();
 
 
 
@@ -26,7 +28,8 @@ exports.get = async(req,res) => {
             media:media,
             slider:slider,
             category:category,
-            subCategory:subcategory
+            subCategory:subcategory,
+            event:event
         }
     
 
