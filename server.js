@@ -37,6 +37,7 @@ const EventApi = require("./routes/api/EventApi");
 const UserApi = require("./routes/api/UserApi");
 const AuthApi = require("./routes/api/auth/AuthApi");
 const DashboardApi = require("./routes/api/DashboardApi");
+const LiteratureApi = require("./routes/api/LiteratureApi");
 
 
 
@@ -52,6 +53,7 @@ app.use("/api/events/",EventApi);
 app.use("/api/users/",UserApi);
 app.use("/api/auth/",AuthApi);
 app.use("/api/dashboard/",DashboardApi);
+app.use("/api/literature/",LiteratureApi);
 
 app.get('/api', (req, res) => {
     res.status(200).json({

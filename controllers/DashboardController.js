@@ -6,7 +6,7 @@ const slider = require("../models/HomeContentModel");
 const categories = require("../models/CategoryModel");
 const subCategory = require("../models/SubCategoryModel");
 const Event = require("../models/EventModel");
-
+const Literature = require("../models/LiteratureModel");
 
 
 exports.get = async(req,res) => {
@@ -18,6 +18,7 @@ exports.get = async(req,res) => {
         const category = await categories.count();
         const subcategory = await subCategory.count();
         const event = await Event.count();
+        const literature = await Literature.count();
 
 
 
@@ -29,7 +30,8 @@ exports.get = async(req,res) => {
             slider:slider,
             category:category,
             subCategory:subcategory,
-            event:event
+            event:event,
+            literature:literature
         }
     
 
