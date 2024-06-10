@@ -59,24 +59,25 @@ app.get('/api', (req, res) => {
     });
 });
 
+ // when on local 👇
+ app.listen(process.env.PORT, () => {
+    console.log(`Server is Up & Running on port ${process.env.PORT}`);
+});
+
+// when hosting;👇
+// app.listen(process.env.PORT,"192.168.1.29", () => {
+//     console.log(`Server is Hosted and Running: ${process.env.PORT}`);
+// });
 
 // sychronize models
 sequelize.sync({alter: true})
-    .then(() => {
-        console.log("Database & tables created");
+    // .then(() => {
+    //     // console.log("Database & tables created");
 
-        // when on local 👇
-        app.listen(process.env.PORT, () => {
-            console.log(`Server is Up & Running on port ${process.env.PORT}`);
-        });
-
-        // when hosting;👇
-        // app.listen(process.env.PORT,"192.168.1.21", () => {
-        //     console.log(`Server is Hosted and Running: ${process.env.PORT}`);
-        // });
+       
         
-    })
-    .catch(err => {
-        console.log(err);
-    })
+    // })
+    // .catch(err => {
+    //     console.log(err);
+    // })
 

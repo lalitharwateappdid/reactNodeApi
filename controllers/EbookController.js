@@ -22,22 +22,11 @@ exports.get = async(req,res) => {
 }
 
 exports.create = async(req,res) => {
-    const {name,description,authorName,pdfPath,coverPath} = req.body
-
+    const {name,description,authorName,pdfPath,coverPath} = req.body;
+   
 
     try{
-        // cover_path.mv(__dirname + '/cover_photo/'+cover_path.name)
-
-        const imagePath = coverPath;
         
-        fileUpload.mv("uploads/"+imagePath.name,(err)=> {
-            if (err) {
-                return res.status(500).json({ message: 'Error uploading file', error: err });
-              }
-              res.status(200).json({ message: 'File uploaded successfully' });
-        })
-
-        console.log("IMage added "+imagePath)
         const ebook = await Ebook.create({
             name:name,
             description:description,

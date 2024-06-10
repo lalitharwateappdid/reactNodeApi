@@ -16,10 +16,7 @@ const Event = sequelize.define("events",{
         type:DataTypes.DATE,
         allowNull:true
     },
-    "day":{
-        type:DataTypes.STRING,
-        allowNull:true
-    }
+   
 })
 
 module.exports = Event
