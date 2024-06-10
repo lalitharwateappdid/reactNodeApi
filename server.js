@@ -23,6 +23,7 @@ require("./models/SubCategoryModel");
 require("./models/EbookModel");
 require('./models/EventModel');
 require("./models/UserModel");
+require("./models/LiteratureModel")
 
 // calling routes here
 const bookApiRoute = require("./routes/api/BookApi");
@@ -65,7 +66,7 @@ app.get('/api', (req, res) => {
 });
 
 // when hosting;👇
-// app.listen(process.env.PORT,"192.168.1.29", () => {
+// app.listen(process.env.PORT,"process.env.IP_PORT", () => {
 //     console.log(`Server is Hosted and Running: ${process.env.PORT}`);
 // });
 

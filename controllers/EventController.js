@@ -37,14 +37,16 @@ exports.create = async(req,res) => {
 
 exports.edit = async(req,res) => {
     const {id} = req.params;
+    // console.log(id +" =================");
 
     try{
         const event = await Event.findByPk(id);
-
-        res.status(200).status({
+  
+        res.status(200).json({
             "message":"Data retrieved successfully",
             "data":event
         })
+        
     }
     catch(err){
         res.status(400).json({
@@ -55,13 +57,13 @@ exports.edit = async(req,res) => {
 
 exports.update = async(req,res) => {
 
-    const {id,event_date,event_name,day} = req.body
-
+    const {id,event_date,event_name} = req.body
+   
     try{
         await Event.update({
            event_date:event_date,
             event_name:event_name,
-            day:day, 
+        
         },{
             where:{
                 id:id
@@ -80,7 +82,7 @@ exports.update = async(req,res) => {
 }
 
 exports.destroy  = async(req,res) => {
-    const {id} = req.params
+    const {id} = req.body
     
     try{
         const event = await Event.findByPk(id);

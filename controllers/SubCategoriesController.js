@@ -99,12 +99,14 @@ exports.edit =  async(req,res) => {
 
 exports.update = async(req,res) => {
     const {id,category_id,name,description} = req.body;
+   
 
     try{
         const subcategory = await SubCategory.findByPk(id)
+        
         if(subcategory){
             await SubCategory.update({
-                category_id:category_id,
+                categoryId:category_id,
                 name:name,
                 description:description
             },
@@ -114,7 +116,7 @@ exports.update = async(req,res) => {
                 }
             }
         )
-
+        console.log("done")
         res.status(200).json({
             "message":"Sub Category Added Successfully"
         })
