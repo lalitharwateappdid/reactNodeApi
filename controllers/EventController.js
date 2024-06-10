@@ -79,8 +79,9 @@ exports.update = async(req,res) => {
     }
 }
 
-exports.delete  = async(req,res) => {
-    const {id} = req.body
+exports.destroy  = async(req,res) => {
+    const {id} = req.params
+    
     try{
         const event = await Event.findByPk(id);
         if(event){
