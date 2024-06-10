@@ -17,7 +17,6 @@ exports.get = async (req, res) => {
 
 exports.create = async (req, res) => {
   const { image_path, description } = req.body;
-  console.log(req.body)
   try {
     const homecontent = await HomeContent.create({
       description: description,

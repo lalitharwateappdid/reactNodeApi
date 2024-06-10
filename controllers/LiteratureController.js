@@ -1,20 +1,139 @@
 const Literature = require("../models/LiteratureModel");
 
 
-exports.get = async(req,res) => {
-    try{
+exports.get = async (req, res) => {
+    try {
         const data = await Literature.findAll();
-        console.log('====================================');
-        console.log(data);
-        console.log('====================================');
         res.status(200).json({
-            "data":data,
-            "status":200
+            "data": data,
+            "status": 200
         })
     }
-    catch(err){
+    catch (err) {
         res.status(400).json({
-            "message":"Something went wrong " + err
+            "message": "Something went wrong " + err
+        })
+    }
+}
+
+exports.delete = async (req, res) => {
+    const { id } = req.body
+
+    try {
+        const data = await Literature.findByPk(id)
+
+        if (data) {
+            await Literature.destroy({
+                where: {
+                    id: id
+                }
+            })
+        }
+
+        res.status(200).json({
+            "message": "Literature Deleted Successfully",
+            "status": true
+        })
+    }
+    catch (err) {
+        res.status(400).json({
+            "message": "Something went wrong " + err
+        })
+    }
+}
+
+exports.edit = async (req, res) => {
+    const id = req.params;
+
+    try {
+        const data = await Literature.findByPk(id)
+
+        if (data) {
+            res.status(200).json({
+                data: data
+            })
+        }
+    }
+    catch (err) {
+        res.status(400).json({
+            "message": "Something went wrong " + err
+
+        })
+    }
+}
+
+exports.create = async (req, res) => {
+    const { category_id, sub_category_id, literature_english, literature_marathi, literature_description_english, literature_description_marathi,
+        author_name, author_name_marathi, author_name_english,
+        saint_name_english, saint_name_marathi, literature_content, audio_file_path
+    } = req.body
+
+    try {
+        const data = await Literature.create({
+            category_id: category_id,
+            sub_category_id: sub_category_id,
+            literature_english: literature_english,
+            literature_marathi: literature_marathi,
+            literature_description_english: literature_description_english,
+            literature_description_marathi: literature_description_marathi,
+            author_name: author_name,
+            author_name_english: author_name_english,
+            author_name_marathi: author_name_marathi,
+            saint_name_english: saint_name_english,
+            saint_name_marathi: saint_name_marathi,
+            literature_content: literature_content,
+            audio_file_path: audio_file_path
+        })
+
+        res.status(200).json({
+            data: data
+        })
+    }
+    catch (err) {
+        res.status(400).json({
+            "message": "Something went wrong " + err
+        })
+    }
+}
+
+exports.update = async (req, res) => {
+    const { category_id, sub_category_id, literature_english, literature_marathi, literature_description_english, literature_description_marathi,
+        author_name, author_name_marathi, author_name_english,
+        saint_name_english, saint_name_marathi, literature_content, audio_file_path, id
+    } = req.body
+
+
+    try {
+        const data = await Literature.findByPk(id)
+
+        if (data) {
+            await Literature.update({
+                category_id: category_id,
+                sub_category_id: sub_category_id,
+                literature_english: literature_english,
+                literature_marathi: literature_marathi,
+                literature_description_english: literature_description_english,
+                literature_description_marathi: literature_description_marathi,
+                author_name: author_name,
+                author_name_english: author_name_english,
+                author_name_marathi: author_name_marathi,
+                saint_name_english: saint_name_english,
+                saint_name_marathi: saint_name_marathi,
+                literature_content: literature_content,
+                audio_file_path: audio_file_path
+            },
+                {
+                    where: {
+                        id: id
+                    }
+                }
+            )
+        }
+    }
+
+    catch (err) {
+        res.status(400).json({
+            "message": 'Something went wrong ' + err
         })
     }
 }
