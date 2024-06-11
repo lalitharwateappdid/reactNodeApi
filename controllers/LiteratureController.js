@@ -86,7 +86,8 @@ exports.create = async (req, res) => {
         })
 
         res.status(200).json({
-            data: data
+            data: data,
+            message:"Literature Added Successfully"
         })
     }
     catch (err) {

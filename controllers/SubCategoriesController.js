@@ -133,3 +133,25 @@ exports.update = async(req,res) => {
         })
     }
 }
+
+exports.getByCategoryId = async(req,res) => {
+    const {id} = req.body;
+
+    try{
+        const data = await SubCategory.findAll({
+            where:{
+                categoryId: id
+            }
+        })
+
+        res.status(200).json({
+            data: data,
+            message:true
+        })
+    }
+    catch(err){
+        res.status(200).json({
+            "message":"Something went wrong " + err
+        })
+    }
+}
