@@ -27,9 +27,6 @@ const Literature = sequelize.define("literatures",{
     "literature_description_marathi":{
         type:DataTypes.TEXT
     },
-    "author_name":{
-        type:DataTypes.STRING
-    },
     "author_name_marathi":{
         type:DataTypes.STRING
     },
