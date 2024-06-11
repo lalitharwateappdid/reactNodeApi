@@ -7,8 +7,8 @@ const LiteratureController = require('../../controllers/LiteratureController');
 router.get("/get", LiteratureController.get)
 router.delete("/delete", LiteratureController.delete)
 router.post("/create", LiteratureController.create)
-router.get("/edit:id", LiteratureController.edit)
-router.put("/update", LiteratureController.delete)
+router.get("/edit/:id", LiteratureController.edit)
+router.put("/update", LiteratureController.update)
 
 
 module.exports = router

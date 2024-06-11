@@ -43,7 +43,7 @@ exports.delete = async (req, res) => {
 }
 
 exports.edit = async (req, res) => {
-    const id = req.params;
+    const {id} = req.params;
 
     try {
         const data = await Literature.findByPk(id)
@@ -102,7 +102,7 @@ exports.update = async (req, res) => {
         author_name, author_name_marathi, author_name_english,
         saint_name_english, saint_name_marathi, literature_content, audio_file_path, id
     } = req.body
-
+    console.log(req.body)
 
     try {
         const data = await Literature.findByPk(id)
@@ -129,6 +129,10 @@ exports.update = async (req, res) => {
                     }
                 }
             )
+
+            res.status(200).json({
+                "message":"Literature Updated Successfully"
+            })
         }
     }
 

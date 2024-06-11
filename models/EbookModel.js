@@ -31,6 +31,11 @@ const Ebook = sequelize.define("ebooks", {
     allowNull:true
   },
 
+  status:{
+    type:DataTypes.BOOLEAN,
+    defaultValue:true
+  }
+
 
 });
 
