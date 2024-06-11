@@ -24,6 +24,7 @@ require("./models/EbookModel");
 require('./models/EventModel');
 require("./models/UserModel");
 require("./models/LiteratureModel")
+require("./models/MasterImageModel")
 
 // calling routes here
 const bookApiRoute = require("./routes/api/BookApi");
