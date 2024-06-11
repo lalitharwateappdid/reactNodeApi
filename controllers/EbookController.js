@@ -132,9 +132,9 @@ exports.delete = async(req,res) => {
 
 exports.status = async(req,res) => {
     const {id} = req.body
-    console.log('====================================');
-    console.log(id);
-    console.log('====================================');
+    // console.log('====================================');
+    // console.log(id);
+    // console.log('====================================');
     try{
         const data = await Ebook.findByPk(id);
 
