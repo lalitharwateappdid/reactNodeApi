@@ -12,6 +12,10 @@ const MasterImage = sequelize.define("master_image",{
     "image":{
         type:DataTypes.STRING,
         allowNull:false
+    },
+    "status":{
+        type:DataTypes.BOOLEAN,
+        defaultValue:true
     }
 
 })
