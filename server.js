@@ -3,14 +3,27 @@ const bodyParser = require('body-parser');
 const express = require("express");
 const app = express();
 app.use(express.json())
+const path = require("path")
 const cors = require('cors');
 app.use(bodyParser.json());
-app.options('*',cors({
-    origin:['http://localhost:5173']
-}));
 
-const fileUpload = require('express-fileupload');
-app.use(fileUpload());
+// file upload middleware
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
+
+// settings cross access origin
+const corsOptions = {
+    origin: 'http://localhost:5173', // Allow requests from this origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow these HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allow these headers
+};
+app.use(cors(corsOptions));
+
+
+// allowing static files to be fetched
+app.use('/api/uploads', express.static('uploads'));
+
+// set time zone
 process.env.TZ ="Asia/Kolkata"
 
 
@@ -44,7 +57,6 @@ const LiteratureApi = require("./routes/api/LiteratureApi");
 const MasterImageApi = require("./routes/api/MasterImageApi");
 
 
-
 // defining routes hhere
 app.use("/api/books/", bookApiRoute);
 app.use("/api/media/", YoutubeMediaApi);
@@ -60,6 +72,8 @@ app.use("/api/dashboard/",DashboardApi);
 app.use("/api/literature/",LiteratureApi);
 app.use("/api/masterimage/",MasterImageApi);
 
+
+// test route
 app.get('/api', (req, res) => {
     res.status(200).json({
         "status": "True",
@@ -79,13 +93,5 @@ app.get('/api', (req, res) => {
 
 // sychronize models
 sequelize.sync({alter: true})
-    // .then(() => {
-    //     // console.log("Database & tables created");
-
-       
-        
-    // })
-    // .catch(err => {
-    //     console.log(err);
-    // })
+ 
 

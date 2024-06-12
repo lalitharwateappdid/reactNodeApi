@@ -1,9 +1,8 @@
 const Ebook = require("../models/EbookModel");
-const fileUpload = require("express-fileupload");
+
 const express = require("express");
 const app = express();
-app.use(fileUpload())
-app.use(express.static('public'));
+
 
 exports.get = async(req,res) => {
     try{

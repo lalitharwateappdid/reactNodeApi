@@ -1,35 +1,51 @@
-const MasterImage = require("../models/MasterImageModel")
-const multer = require("multer")
+const { Image } = require('../models/MasterImageModel');
 
-
+const express = require('express')
+const multer  = require('multer');
+const MasterImage = require('../models/MasterImageModel');
 
 const storage = multer.diskStorage({
-    destination:function(req,file,cb){
-        cb(null,'uploads/')
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/')
     },
-    filename:function(req,file,cb){
-        cb(null,file.fieldname + '-' +Date.now() + path.extname(file.originalname));
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      
+      cb(null, Date.now()+file.originalname)
     }
-})
+  })
+  
+  const upload = multer({ storage })
+// const upload = multer({ dest: 'uploads/' })
 
-const upload = multer({storage:storage}).single('image');
+const app = express()
 
-exports.create = (req,res) => {
-    // const {image} = req.files
-    console.log(req.files)
-    
-    upload(req,res,async function(err){
-        if (err) {
-            return res.status(500).send(err);
-        }
+exports.create = async(req, res) => {
+    const filePath = req.file.path;
 
-        // Save the file path to the database
-        const imagePath = req.file.path;
-        try {
-            const image = await Image.create({ path: imagePath });
-            res.send('File uploaded successfully and path saved to database.');
-        } catch (error) {
-            res.status(500).send(error.message);
-        }
+    const data = await MasterImage.create({
+        image:filePath
     })
+    res.status(200).json({
+        "data":data,
+        "message":"file uploaded successfully"
+    })
+};
+
+exports.uploadSingleAvatar = upload.single('image');
+
+exports.get = async(req,res) => {
+    try{
+        const data = await MasterImage.findAll()
+
+        res.status(200).json({
+            "data":data,
+            
+        })
+    }
+    catch(err){
+        res.status(400).json({
+            "message":"Something went wrong " + err
+        })
+    }
 }
