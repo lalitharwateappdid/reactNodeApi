@@ -39,6 +39,7 @@ const UserApi = require("./routes/api/UserApi");
 const AuthApi = require("./routes/api/auth/AuthApi");
 const DashboardApi = require("./routes/api/DashboardApi");
 const LiteratureApi = require("./routes/api/LiteratureApi");
+const MasterImageApi = require("./routes/api/MasterImageApi");
 
 
 
@@ -55,6 +56,7 @@ app.use("/api/users/",UserApi);
 app.use("/api/auth/",AuthApi);
 app.use("/api/dashboard/",DashboardApi);
 app.use("/api/literature/",LiteratureApi);
+app.use("/api/masterimage",MasterImageApi)
 
 app.get('/api', (req, res) => {
     res.status(200).json({
