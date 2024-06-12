@@ -9,6 +9,7 @@ router.post("/create",CategoryController.create);
 router.delete("/destroy",CategoryController.destroy);
 router.get("/edit/:id",CategoryController.edit);
 router.put("/update",CategoryController.update);
+router.put("/status",CategoryController.status)
 
 module.exports=router
 

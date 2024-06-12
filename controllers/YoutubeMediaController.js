@@ -120,3 +120,23 @@ exports.update = async (req, res) => {
     })
   }
 }
+
+exports.status = async(req,res) => {
+  const {id} = req.body
+    try{
+        const data = await Media.findByPk(id);
+
+        data.status = data.status === false ? true : false;
+        await data.save();
+
+        res.status(200).json({
+            "message":"Status Updated Sucessfully",
+            data:data
+        })
+    }
+    catch(err){
+        res.status(400).json({
+            "message":"Something went wrong " + err
+        })
+    }
+}

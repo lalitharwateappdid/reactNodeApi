@@ -70,12 +70,12 @@ exports.update = async (req, res) => {
       );
 
       res.status(200).json({
-        "message":"Home Content Updated Successfully"
-      })
+        message: "Home Content Updated Successfully",
+      });
     } else {
-        res.status(400).json({
-            "message":"Home content not found"
-        })
+      res.status(400).json({
+        message: "Home content not found",
+      });
     }
   } catch (err) {
     res.status(400).json({
@@ -84,33 +84,51 @@ exports.update = async (req, res) => {
   }
 };
 
-exports.destroy = async(req, res) => {
+exports.destroy = async (req, res) => {
   const { id } = req.body;
 
-  try{
+  try {
     const homecontent = await HomeContent.findByPk(id);
 
-    if(homecontent){
-        await HomeContent.destroy({
-            where:{
-                id:id
-            }
-        })
+    if (homecontent) {
+      await HomeContent.destroy({
+        where: {
+          id: id,
+        },
+      });
 
-        res.status(200).json({
-            "message":"Home content Deleted Successfully"
-        })
+      res.status(200).json({
+        message: "Home content Deleted Successfully",
+      });
+    } else {
+      res.status(400).json({
+        message: "Home Content Not Found",
+      });
     }
-    else{
-        res.status(400).json({
-            "message":"Home Content Not Found"
-        })
-    }
-  }
-  catch(err){
+  } catch (err) {
     res.status(400).json({
-        "message":"Something went wrong " + err
-    })
+      message: "Something went wrong " + err,
+    });
   }
-  
+};
+
+
+exports.status = async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    const data = await HomeContent.findByPk(id);
+
+    data.status = data.status === false ? true : false;
+    await data.save();
+
+    res.status(200).json({
+      message: "Status Updated Sucessfully",
+      data: data,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Something went wrong",
+    });
+  }
 };

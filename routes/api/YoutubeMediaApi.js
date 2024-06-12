@@ -7,5 +7,6 @@ router.post("/create",YoutubeMediaController.create);
 router.delete("/destroy",YoutubeMediaController.destroy);
 router.get("/edit/:id",YoutubeMediaController.edit);
 router.put("/update",YoutubeMediaController.update);
+router.put("/status",YoutubeMediaController.status);
 
 module.exports = router;

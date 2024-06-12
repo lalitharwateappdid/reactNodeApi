@@ -15,6 +15,10 @@ const YoutubeMedia = sequelize.define("YoutubeMedia", {
     link: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+    status: {
+        type: DataTypes.BOOLEAN,
+        defaultValue:true
     }
 });
 

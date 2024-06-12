@@ -19,6 +19,10 @@ const Quote = sequelize.define("Quotes", {
 
     year:{
         type:DataTypes.INTEGER
+    },
+    status:{
+        type:DataTypes.BOOLEAN,
+        defaultValue:true
     }
 });
 

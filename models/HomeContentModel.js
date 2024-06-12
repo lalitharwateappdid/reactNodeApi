@@ -15,6 +15,11 @@ const HomeContent = sequelize.define("HomeContents",{
     "image_path":{
         type:DataTypes.STRING,
         
+    },
+
+    "status":{
+        type:DataTypes.BOOLEAN,
+        defaultValue:true
     }
 })
 
