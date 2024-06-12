@@ -1,6 +1,3 @@
-const { Image } = require('../models/MasterImageModel');
-
-const express = require('express')
 const multer  = require('multer');
 const MasterImage = require('../models/MasterImageModel');
 
@@ -18,7 +15,6 @@ const storage = multer.diskStorage({
   const upload = multer({ storage })
 // const upload = multer({ dest: 'uploads/' })
 
-const app = express()
 
 exports.create = async(req, res) => {
     const filePath = req.file.path;
@@ -32,6 +28,7 @@ exports.create = async(req, res) => {
     })
 };
 
+// image uploading middleware
 exports.uploadSingleAvatar = upload.single('image');
 
 exports.get = async(req,res) => {
@@ -43,6 +40,45 @@ exports.get = async(req,res) => {
             
         })
     }
+    catch(err){
+        res.status(400).json({
+            "message":"Something went wrong " + err
+        })
+    }
+}
+
+exports.status = async(req,res) => {
+    const {id} = req.body
+    try{
+        const data = await MasterImage.findByPk(id)
+
+        data.status = !data.status
+        data.save();
+
+        res.status(200).json({
+            "message":"Status Updated Sucessfully"
+        })
+    }
+    catch(err){
+        res.status(400).json({
+            "message":"Something went wrong "+ err 
+        })
+    }
+}
+
+exports.delete = async(req,res) => {
+    const {id} = req.body
+    try{
+        await MasterImage.destroy({
+            where:{
+                id:id
+            }
+        })
+
+        res.status(200).json({
+            "message":"Image Deleted Successfully"
+        })
+    }   
     catch(err){
         res.status(400).json({
             "message":"Something went wrong " + err
