@@ -56,7 +56,7 @@ app.use("/api/users/",UserApi);
 app.use("/api/auth/",AuthApi);
 app.use("/api/dashboard/",DashboardApi);
 app.use("/api/literature/",LiteratureApi);
-app.use("/api/masterimage",MasterImageApi)
+app.use("/api/masterimage/",MasterImageApi)
 
 app.get('/api', (req, res) => {
     res.status(200).json({
