@@ -1,6 +1,8 @@
 const MasterImage = require("../models/MasterImageModel")
 const multer = require("multer")
 
+
+
 const storage = multer.diskStorage({
     destination:function(req,file,cb){
         cb(null,'uploads/')
@@ -14,6 +16,7 @@ const upload = multer({storage:storage}).single('image');
 
 exports.create = (req,res) => {
     // const {image} = req.files
+    console.log(req.files)
     
     upload(req,res,async function(err){
         if (err) {

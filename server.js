@@ -5,7 +5,9 @@ const app = express();
 app.use(express.json())
 const cors = require('cors');
 app.use(bodyParser.json());
-app.use(cors());
+app.options('*',cors({
+    origin:['http://localhost:5173']
+}));
 
 const fileUpload = require('express-fileupload');
 app.use(fileUpload());
@@ -56,7 +58,7 @@ app.use("/api/users/",UserApi);
 app.use("/api/auth/",AuthApi);
 app.use("/api/dashboard/",DashboardApi);
 app.use("/api/literature/",LiteratureApi);
-app.use("/api/masterimage/",MasterImageApi)
+app.use("/api/masterimage/",MasterImageApi);
 
 app.get('/api', (req, res) => {
     res.status(200).json({
