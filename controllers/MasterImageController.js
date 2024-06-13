@@ -1,5 +1,6 @@
 const multer  = require('multer');
 const MasterImage = require('../models/MasterImageModel');
+var data_exporter = require('json2csv').Parser;
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -17,6 +18,10 @@ const storage = multer.diskStorage({
 
 
 exports.create = async(req, res) => {
+    // const {image} = req.body
+    if (!req.file) {
+        return res.status(400).json({ message: 'No file uploaded' });
+    }
     const filePath = req.file.path;
 
     const data = await MasterImage.create({
@@ -82,6 +87,33 @@ exports.delete = async(req,res) => {
     catch(err){
         res.status(400).json({
             "message":"Something went wrong " + err
+        })
+    }
+}
+
+exports.excelExport = async(req,response) => {
+    try{
+        const data = await MasterImage.findAll();
+        
+        var mysql_data = JSON.parse(JSON.stringify(data));
+        // defining csv header
+        let header = ['id','image','status'];
+
+        var json_data = new data_exporter({header});
+
+        var csv_data = json_data.parse(mysql_data);
+
+        response.setHeader("Content-Type", "text/csv");
+
+        response.setHeader("Content-Disposition", "attachment; filename=sample_data.csv");
+
+        response.send(csv_data)
+
+    }
+
+    catch(err){
+        response.status(400).json({
+            "message":"Something went wrong"
         })
     }
 }
