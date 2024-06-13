@@ -10,6 +10,7 @@ router.post("/create", LiteratureController.create)
 router.get("/edit/:id", LiteratureController.edit)
 router.put("/update", LiteratureController.update)
 router.put("/status",LiteratureController.status)
+router.get("/literature-get",LiteratureController.literatureGet)
 
 
 module.exports = router

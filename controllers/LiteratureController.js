@@ -1,4 +1,6 @@
 const Literature = require("../models/LiteratureModel");
+const CategoryLiterature = require("../models/CategoryLiterature")
+const Category = require("../models/CategoryModel")
 
 exports.get = async (req, res) => {
   try {
@@ -13,6 +15,33 @@ exports.get = async (req, res) => {
     });
   }
 };
+
+exports.literatureGet = async(req,res) => {
+  const {id} = req.body
+  
+
+  try{
+    
+      const data = await CategoryLiterature.findAll({
+          where: {
+              literatureId: id
+          },
+          include: [{
+            model: Literature,
+            attributes: ['id', 'name'] 
+        }]
+      });
+
+    res.status(200).json({
+      data:data
+    })
+  }
+  catch(err){
+    res.status(400).json({
+      "message":"Something went wrong " + err
+    })
+  }
+}
 
 exports.delete = async (req, res) => {
   const { id } = req.body;
