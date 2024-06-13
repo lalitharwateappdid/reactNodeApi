@@ -41,7 +41,9 @@ require('./models/EventModel');
 require("./models/UserModel");
 require("./models/LiteratureModel")
 require("./models/MasterImageModel")
-require("./models/CategoryLiterature")
+// require("./models/CategoryLiterature")
+
+
 
 // calling routes here
 const bookApiRoute = require("./routes/api/BookApi");
@@ -57,6 +59,8 @@ const AuthApi = require("./routes/api/auth/AuthApi");
 const DashboardApi = require("./routes/api/DashboardApi");
 const LiteratureApi = require("./routes/api/LiteratureApi");
 const MasterImageApi = require("./routes/api/MasterImageApi");
+const Literature = require("./models/LiteratureModel");
+const Category = require("./models/CategoryModel");
 
 
 // defining routes hhere
@@ -74,7 +78,9 @@ app.use("/api/dashboard/",DashboardApi);
 app.use("/api/literature/",LiteratureApi);
 app.use("/api/masterimage/",MasterImageApi);
 
-
+// m:m relationship 
+Literature.belongsToMany(Category,{through:"category_literature"})
+Category.belongsToMany(Literature,{through:"category_literature"})
 // test route
 app.get('/api', (req, res) => {
     res.status(200).json({

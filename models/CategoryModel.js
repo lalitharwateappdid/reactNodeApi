@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 const sequelize = require("../database/database");
+const Literature = require("./LiteratureModel");
 
 const Category = sequelize.define("Categories",{
     'id':{
@@ -21,5 +22,7 @@ const Category = sequelize.define("Categories",{
         defaultValue:true
     }
 })
+
+Category.belongsTo(Literature,{foreignKey:"sub_category_id", allowNull:true})
 
 module.exports = Category

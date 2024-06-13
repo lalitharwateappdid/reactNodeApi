@@ -1,7 +1,6 @@
 const Literature = require("../models/LiteratureModel");
-const CategoryLiterature = require("../models/CategoryLiterature")
-const Category = require("../models/CategoryModel")
-
+const Category = require("../models/CategoryModel");
+const SubCategory = require("../models/SubCategoryModel");
 exports.get = async (req, res) => {
   try {
     const data = await Literature.findAll();
@@ -22,18 +21,32 @@ exports.literatureGet = async(req,res) => {
 
   try{
     
-      const data = await CategoryLiterature.findAll({
-          where: {
-              literatureId: id
-          },
-          include: [{
-            model: Literature,
-            attributes: ['id', 'name'] 
-        }]
-      });
+  //     const data = await Literature.findAll({
+  //           where:{
+  //             id:id
+  //           },
+  //           include:{
+  //             model: [Category],
+  //           }
+        
+  // });
+
+  const data = await Literature.findAll({
+    include:[{
+      model:Category,
+      
+    }]
+  })
+
+  const data2 = await Category.findAll({
+    include:[{
+      model:Literature,
+    }]
+  })
 
     res.status(200).json({
-      data:data
+      data:data,
+      data2:data2
     })
   }
   catch(err){

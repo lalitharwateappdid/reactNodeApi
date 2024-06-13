@@ -54,5 +54,4 @@ const category = require("./CategoryModel");
 const SubCategory = require("./SubCategoryModel");
 Literature.belongsTo(category,{foreignKey:"category_id", allowNull:true})
 Literature.belongsTo(SubCategory,{foreignKey:"sub_category_id", allowNull:true})
-
 module.exports = Literature
