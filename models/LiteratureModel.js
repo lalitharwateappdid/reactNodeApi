@@ -9,12 +9,7 @@ const Literature = sequelize.define("literatures",{
         autoIncrement:true
     },
 
-    "category_id":{
-        type:DataTypes.INTEGER,
-    },
-    "sub_category_id":{
-        type:DataTypes.INTEGER,
-    },
+    
     "literature_english":{
         type:DataTypes.STRING
     },
@@ -50,8 +45,8 @@ const Literature = sequelize.define("literatures",{
     }
 })
 
-const category = require("./CategoryModel");
-const SubCategory = require("./SubCategoryModel");
-Literature.belongsTo(category,{foreignKey:"category_id", allowNull:true})
-Literature.belongsTo(SubCategory,{foreignKey:"sub_category_id", allowNull:true})
+// const category = require("./CategoryModel");
+// const SubCategory = require("./SubCategoryModel");
+// Literature.belongsTo(category,{foreignKey:"category_id", allowNull:true})
+// Literature.belongsTo(SubCategory,{foreignKey:"sub_category_id", allowNull:true})
 module.exports = Literature
