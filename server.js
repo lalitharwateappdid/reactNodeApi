@@ -41,6 +41,7 @@ require('./models/EventModel');
 require("./models/UserModel");
 require("./models/LiteratureModel")
 require("./models/MasterImageModel")
+require("./models/CategoryLiterature")
 
 // calling routes here
 const bookApiRoute = require("./routes/api/BookApi");
