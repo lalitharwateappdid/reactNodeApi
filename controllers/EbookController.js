@@ -1,7 +1,23 @@
 const Ebook = require("../models/EbookModel");
-
+const multer  = require('multer');
 const express = require("express");
 const app = express();
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/')
+    },
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      
+      cb(null, Date.now()+file.originalname)
+    }
+  })
+  
+  const upload = multer({ storage })
+
+  exports.uploadFiles = upload.single('coverPath');
+ 
 
 
 exports.get = async(req,res) => {
@@ -21,17 +37,22 @@ exports.get = async(req,res) => {
 }
 
 exports.create = async(req,res) => {
-    const {name,description,authorName,pdfPath,coverPath} = req.body;
-   
+    console.log(req.body)
+    const {name,description,authorName,pdfPath} = req.body;
+    
+    const coverPath = req.file
+    // console.log('====================================');
+    // console.log(pdfPath);
+    // console.log('====================================');
+    // const coverPath = req.files['pdfPath'][0].path;
+    // console.log(coverPath)
 
     try{
         
         const ebook = await Ebook.create({
-            name:name,
-            description:description,
-            authorName:authorName,
+          
             coverPath:coverPath,   
-            pdfPath:pdfPath
+           
         })
 
         res.status(200).json({
