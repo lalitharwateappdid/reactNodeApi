@@ -1,5 +1,20 @@
 const db = require("../database/database");
 const HomeContent = require("../models/HomeContentModel");
+const multer  = require('multer')
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    
+    cb(null, Date.now()+file.originalname)
+  }
+})
+
+const upload = multer({ storage })
+exports.uploadSingleAvatar = upload.single('image_path');
 
 exports.get = async (req, res) => {
   try {
@@ -16,7 +31,8 @@ exports.get = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
-  const { image_path, description } = req.body;
+  res.json(req.body)
+
   try {
     const homecontent = await HomeContent.create({
       description: description,
