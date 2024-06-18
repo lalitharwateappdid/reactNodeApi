@@ -80,7 +80,7 @@ exports.edit = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  const { id, quote } = req.body;
+  const { id, quote,year,day_of_year } = req.body;
 
   try {
     const quoteupdate = await Quote.findByPk(id);
@@ -89,6 +89,8 @@ exports.update = async (req, res) => {
       await Quote.update(
         {
           quote: quote,
+          year:year,
+          day_of_year:day_of_year
         },
         {
           where: {
