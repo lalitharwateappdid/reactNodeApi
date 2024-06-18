@@ -31,13 +31,21 @@ exports.get = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
-  res.json(req.body)
-
+  // res.json(req.body)
+  const { description } = req.body;
   try {
+
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    const image_path = req.file.path; // Path to uploaded file
     const homecontent = await HomeContent.create({
       description: description,
       image_path: image_path,
     });
+
+
 
     res.status(200).json({
       message: "Home content added successfully",
