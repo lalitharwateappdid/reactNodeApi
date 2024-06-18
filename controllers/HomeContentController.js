@@ -75,8 +75,8 @@ exports.edit = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  const { id, image_path, description } = req.body;
-  // console.log(req.body)
+  const { id, description } = req.body;
+  console.log(req.body)
 
   try {
     const homecontent = await HomeContent.findByPk(id);
