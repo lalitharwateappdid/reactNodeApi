@@ -23,6 +23,7 @@ const Category = sequelize.define("Categories",{
     }
 })
 
-Category.belongsTo(Literature,{foreignKey:"sub_category_id", allowNull:true})
-
+const subCategory = require("./SubCategoryModel");
+Category.hasMany(subCategory,{ foreignKey:"categoryId"});
+subCategory.belongsTo(Category,{foreignKey:"categoryId"})
 module.exports = Category

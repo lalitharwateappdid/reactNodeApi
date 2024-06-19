@@ -25,7 +25,8 @@ const SubCategory = sequelize.define("sub_categories",{
 })
 
 // defining relationships
-const Category = require("./CategoryModel");
-SubCategory.belongsTo(Category,{foreignKey:"categoryId", allowNull:true})
+// const Category = require("./CategoryModel");
+
+// SubCategory.belongsTo(Category,{foreignKey:"categoryId"})
 
 module.exports = SubCategory
