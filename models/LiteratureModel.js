@@ -42,7 +42,12 @@ const Literature = sequelize.define("literatures",{
     },
     "audio_file_path":{
         type:DataTypes.STRING
+    },
+    "status":{
+        type:DataTypes.BOOLEAN,
+        defaultValue:true
     }
+
 })
 
 // const category = require("./CategoryModel");

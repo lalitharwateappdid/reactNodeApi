@@ -204,9 +204,9 @@ exports.status = async (req, res) => {
   const { id } = req.body;
 
   try {
-    const data = Literature.findByPk(id);
+    const data = await Literature.findByPk(id);
     data.status = data.status === false ? true : false;
-    data.save();
+    await data.save();
     res.status(200).json({
         "message":"Status Updated Sucessfully"
     })
