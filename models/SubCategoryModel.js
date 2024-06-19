@@ -21,6 +21,10 @@ const SubCategory = sequelize.define("sub_categories",{
     "categoryId":{
         type:DataTypes.INTEGER,
         allowNull:true
+    },
+    "status":{
+        type:DataTypes.BOOLEAN,
+        defaultValue:true
     }
 })
 
