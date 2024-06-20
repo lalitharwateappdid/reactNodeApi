@@ -13,7 +13,7 @@ const Event = sequelize.define("events",{
         allowNull:true
     },
     "event_date":{
-        type:DataTypes.DATE,
+        type:DataTypes.DATEONLY,
         allowNull:true
     },
     "status":{
