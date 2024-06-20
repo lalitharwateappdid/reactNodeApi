@@ -2,6 +2,7 @@ const Category = require("../models/CategoryModel");
 const multer = require("multer");
 const express = require("express");
 const app = express();
+const Subcategory = require("../models/SubCategoryModel") 
 
 
 const storage = multer.diskStorage({
@@ -24,8 +25,12 @@ exports.uploadFiles = upload.single("coverImage");
 exports.get = async (req, res) => {
   try {
     const category = await Category.findAll({
-      order:[['id','DESC']]
-  });
+      order:[['id','DESC']],
+      include:[{
+        model:Subcategory
+      }]
+  },
+);
     res.status(200).json({
       data: category,
     });

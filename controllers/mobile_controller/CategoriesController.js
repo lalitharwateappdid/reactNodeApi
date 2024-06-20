@@ -1,12 +1,17 @@
 const db = require("../../database/database");
 const Category = require("../../models/CategoryModel");
+const Subcategory = require("../../models/SubCategoryModel") 
 
 exports.get = async(req,res) => {
     try{
         const data = await Category.findAll({
             where:{
                 status:true
-            }
+            },
+            include: [{
+                model: Subcategory,
+               
+              }]
         })
 
         res.status(200).json({

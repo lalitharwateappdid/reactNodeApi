@@ -24,7 +24,8 @@ const Category = sequelize.define("Categories",{
     "status":{
         type:DataTypes.BOOLEAN,
         defaultValue:true
-    }
+    },
+   
 })
 
 const subCategory = require("./SubCategoryModel");
