@@ -1,6 +1,13 @@
 const db = require("../database/database");
 const HomeContent = require("../models/HomeContentModel");
-const multer  = require('multer')
+const multer = require('multer')
+
+const express = require('express');
+const bodyParser = require('body-parser');
+
+const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -8,8 +15,8 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    
-    cb(null, Date.now()+file.originalname)
+
+    cb(null, Date.now() + file.originalname)
   }
 })
 
@@ -31,7 +38,7 @@ exports.get = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
-  // res.json(req.body)
+  console.log(req.body)
   const { description } = req.body;
   try {
 
@@ -75,24 +82,46 @@ exports.edit = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  const { id, description } = req.body;
-  console.log(req.body)
+
 
   try {
+    const { id, description } = req.body;
+    console.log(id)
     const homecontent = await HomeContent.findByPk(id);
+    let image_path;
+    if (req.file) {
+      image_path = req.file.path;
+    }
+
 
     if (homecontent) {
-      await HomeContent.update(
-        {
-          description: description,
-          image_path: image_path,
-        },
-        {
-          where: {
-            id: id,
+      if (image_path) {
+
+        await HomeContent.update(
+          {
+            description: description,
+            image_path: image_path,
           },
-        }
-      );
+          {
+            where: {
+              id: id,
+            },
+          }
+        );
+      }
+      else {
+        await HomeContent.update(
+          {
+            description: description,
+
+          },
+          {
+            where: {
+              id: id,
+            },
+          }
+        );
+      }
 
       res.status(200).json({
         message: "Home Content Updated Successfully",
