@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 const sequelize = require("../database/database");
+const Category = require("./CategoryModel");
 
 const Literature = sequelize.define("literatures",{
     "id":{
@@ -8,8 +9,6 @@ const Literature = sequelize.define("literatures",{
         primaryKey:true,
         autoIncrement:true
     },
-
-    
     "literature_english":{
         type:DataTypes.STRING
     },
@@ -46,12 +45,15 @@ const Literature = sequelize.define("literatures",{
     "status":{
         type:DataTypes.BOOLEAN,
         defaultValue:true
+    },
+    "category_id":{
+        
     }
 
 })
 
 // const category = require("./CategoryModel");
-// const SubCategory = require("./SubCategoryModel");
-// Literature.belongsTo(category,{foreignKey:"category_id", allowNull:true})
-// Literature.belongsTo(SubCategory,{foreignKey:"sub_category_id", allowNull:true})
+const SubCategory = require("./SubCategoryModel");
+Literature.hasMany(Category,{foreignKey:"category_id", allowNull:true})
+Category.belongsTo(SubCategory,{foreignKey:"sub_category_id", allowNull:true})
 module.exports = Literature
