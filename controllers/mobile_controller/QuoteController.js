@@ -1,12 +1,14 @@
 const db = require("../../database/database");
 const Quote = require("../../models/QuoteModel");
+const { Op } = require('sequelize');
 
 
 exports.get = async (req, res) => {
+    
     try {
-        const data = Quote.findOne({
-            where: {
-                date: Date.now()
+        const data = await Quote.findOne({
+            where:{
+                date:Date.now()
             }
         })
 
