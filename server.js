@@ -72,6 +72,7 @@ const EventMobileApi = require("./routes/mobile_api/EventApi");
 const EbookMobileApi = require("./routes/mobile_api/EbookApi")
 const AuthMobileApi = require("./routes/mobile_api/AuthApi");
 const BusinessSettingsApi = require("./routes/mobile_api/BusinessSettingApi");
+const CategoryMobileApi = require("./routes/mobile_api/CategoryApi");
 
 
 // defining routes hhere
@@ -97,6 +98,7 @@ app.use("/api/v1/event", EventMobileApi)
 app.use("/api/v1/ebook", EbookMobileApi)
 app.use("/api/v1/auth", AuthMobileApi)
 app.use("/api/v1/business-settings",BusinessSettingsApi);
+app.use("/api/v1/category",CategoryMobileApi)
 
 // m:m relationship 
 // Literature.belongsToMany(Category, { through: "category_literature" })

@@ -2,7 +2,9 @@ const Category = require("../models/CategoryModel");
 
 exports.get = async (req, res) => {
   try {
-    const category = await Category.findAll();
+    const category = await Category.findAll({
+      order:[['id','DESC']]
+  });
     res.status(200).json({
       data: category,
     });
