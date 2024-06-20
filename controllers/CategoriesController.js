@@ -1,4 +1,25 @@
 const Category = require("../models/CategoryModel");
+const multer = require("multer");
+const express = require("express");
+const app = express();
+
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+
+    cb(null, Date.now() + file.originalname);
+  },
+});
+
+const upload = multer({ storage });
+
+exports.uploadFiles = upload.single("coverImage");
+
+
 
 exports.get = async (req, res) => {
   try {
@@ -86,13 +107,18 @@ exports.edit = async (req, res) => {
 
 exports.update = async (req, res) => {
   const { id, name, description } = req.body;
+  const cover_image = req.file.path;
+
+  // const cover_path = cover_image.path;
   try {
     const category = await Category.findByPk(id);
     if (category) {
       await Category.update(
         {
           name: name,
+          cover_image:cover_image,
           description: description,
+          // cover_image:cover_image
         },
         {
           where: {
