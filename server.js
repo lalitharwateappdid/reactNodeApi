@@ -41,7 +41,9 @@ require('./models/EventModel');
 require("./models/UserModel");
 require("./models/LiteratureModel")
 require("./models/MasterImageModel")
+require("./models/BusinessSettingModel")
 // require("./models/CategoryLiterature")
+
 
 
 
@@ -69,6 +71,7 @@ const QuoteMobileApi = require("./routes/mobile_api/QuoteApi");
 const EventMobileApi = require("./routes/mobile_api/EventApi");
 const EbookMobileApi = require("./routes/mobile_api/EbookApi")
 const AuthMobileApi = require("./routes/mobile_api/AuthApi");
+const BusinessSettingsApi = require("./routes/mobile_api/BusinessSettingApi");
 
 
 // defining routes hhere
@@ -93,6 +96,7 @@ app.use("/api/v1/quote", QuoteMobileApi)
 app.use("/api/v1/event", EventMobileApi)
 app.use("/api/v1/ebook", EbookMobileApi)
 app.use("/api/v1/auth", AuthMobileApi)
+app.use("/api/v1/business-settings",BusinessSettingsApi);
 
 // m:m relationship 
 // Literature.belongsToMany(Category, { through: "category_literature" })
