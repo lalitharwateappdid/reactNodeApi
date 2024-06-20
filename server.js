@@ -8,15 +8,15 @@ const cors = require('cors');
 app.use(bodyParser.json());
 
 // file upload middleware
-const multer  = require('multer')
+const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 
 // settings cross access origin
 const corsOptions = {
-    origin: ['http://localhost:5173',"http://localhost:5173/api/uploads"], // Allow requests from this origin
+    origin: ['http://localhost:5173', "http://localhost:5173/api/uploads"], // Allow requests from this origin
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow these HTTP methods
     allowedHeaders: [['Content-Type', 'Authorization']],
-    Credential:true // Allow these headers
+    Credential: true // Allow these headers
 };
 app.use(cors(corsOptions));
 
@@ -25,7 +25,7 @@ app.use(cors(corsOptions));
 app.use('/api/uploads', express.static('uploads'));
 
 // set time zone
-process.env.TZ ="Asia/Kolkata"
+process.env.TZ = "Asia/Kolkata"
 
 
 // calling models here to synchronize
@@ -49,7 +49,7 @@ require("./models/MasterImageModel")
 const bookApiRoute = require("./routes/api/BookApi");
 const YoutubeMediaApi = require("./routes/api/YoutubeMediaApi");
 const QuoteApi = require("./routes/api/QuoteApi");
-const CategoryApi = require("./routes/api/CategoryApi");    
+const CategoryApi = require("./routes/api/CategoryApi");
 const SubCategoryApi = require("./routes/api/SubCategoryApi");
 const HomeContentApi = require("./routes/api/HomeContentApi");
 const EbookApi = require("./routes/api/EbookApi");
@@ -62,6 +62,13 @@ const MasterImageApi = require("./routes/api/MasterImageApi");
 const Literature = require("./models/LiteratureModel");
 const Category = require("./models/CategoryModel");
 
+// calling mobile apis here
+const ContentApi = require("./routes/mobile_api/HomeContentApi");
+const YoutubeMediaMobileApi = require("./routes/mobile_api/YoutubeMediaApi");
+const QuoteMobileApi = require("./routes/mobile_api/QuoteApi");
+const EventMobileApi = require("./routes/mobile_api/EventApi");
+const EbookMobileApi = require("./routes/mobile_api/EbookApi")
+
 
 // defining routes hhere
 app.use("/api/books/", bookApiRoute);
@@ -70,17 +77,24 @@ app.use("/api/quote/", QuoteApi);
 app.use("/api/category/", CategoryApi);
 app.use("/api/sub-category/", SubCategoryApi);
 app.use("/api/home-content/", HomeContentApi);
-app.use("/api/ebook/",EbookApi);
-app.use("/api/events/",EventApi);
-app.use("/api/users/",UserApi);
-app.use("/api/auth/",AuthApi);
-app.use("/api/dashboard/",DashboardApi);
-app.use("/api/literature/",LiteratureApi);
-app.use("/api/masterimage/",MasterImageApi);
+app.use("/api/ebook/", EbookApi);
+app.use("/api/events/", EventApi);
+app.use("/api/users/", UserApi);
+app.use("/api/auth/", AuthApi);
+app.use("/api/dashboard/", DashboardApi);
+app.use("/api/literature/", LiteratureApi);
+app.use("/api/masterimage/", MasterImageApi);
+
+// defining mobile routes here
+app.use("/api/v1/content", ContentApi);
+app.use("/api/v1/media", YoutubeMediaMobileApi)
+app.use("/api/v1/quote", QuoteMobileApi)
+app.use("/api/v1/event", EventMobileApi)
+app.use("/api/v1/ebook", EbookMobileApi)
 
 // m:m relationship 
-Literature.belongsToMany(Category,{through:"category_literature"})
-Category.belongsToMany(Literature,{through:"category_literature"})
+// Literature.belongsToMany(Category, { through: "category_literature" })
+// Category.belongsToMany(Literature, { through: "category_literature" })
 // test route
 app.get('/api', (req, res) => {
     res.status(200).json({
@@ -89,8 +103,8 @@ app.get('/api', (req, res) => {
     });
 });
 
- // when on local 👇
- app.listen(process.env.PORT, () => {
+// when on local 👇
+app.listen(process.env.PORT, () => {
     console.log(`Server is Up & Running on port ${process.env.PORT}`);
 });
 
@@ -100,6 +114,6 @@ app.get('/api', (req, res) => {
 // });
 
 // sychronize models
-sequelize.sync({alter: true})
- 
+sequelize.sync({ alter: true })
+
 

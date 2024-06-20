@@ -1,6 +1,6 @@
 const multer  = require('multer');
 const MasterImage = require('../models/MasterImageModel');
-var data_exporter = require('json2csv').Parser;
+
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
