@@ -68,6 +68,7 @@ const YoutubeMediaMobileApi = require("./routes/mobile_api/YoutubeMediaApi");
 const QuoteMobileApi = require("./routes/mobile_api/QuoteApi");
 const EventMobileApi = require("./routes/mobile_api/EventApi");
 const EbookMobileApi = require("./routes/mobile_api/EbookApi")
+const AuthMobileApi = require("./routes/mobile_api/AuthApi");
 
 
 // defining routes hhere
@@ -91,6 +92,7 @@ app.use("/api/v1/media", YoutubeMediaMobileApi)
 app.use("/api/v1/quote", QuoteMobileApi)
 app.use("/api/v1/event", EventMobileApi)
 app.use("/api/v1/ebook", EbookMobileApi)
+app.use("/api/v1/auth", AuthMobileApi)
 
 // m:m relationship 
 // Literature.belongsToMany(Category, { through: "category_literature" })
