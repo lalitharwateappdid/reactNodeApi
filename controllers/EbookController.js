@@ -17,9 +17,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 exports.uploadFiles = upload.fields([
-    { name: 'coverPath', maxCount: 1 },
-    { name: 'pdfPath', maxCount: 1 }
-  ]);
+  { name: 'coverPath', maxCount: 1 },
+  { name: 'pdfPath', maxCount: 1 }
+]);
 
 exports.get = async (req, res) => {
   try {
@@ -37,15 +37,27 @@ exports.get = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
-  // console.log(req.body)
-console.log(req.files);
   try {
-      const { name, description, authorName } = req.body;
-    const imageFile = req.files.coverPath[0];
-    const pdfFile = req.files.pdfPath[0];
+    const { name, description, authorName } = req.body;
 
-    const image_path = imageFile.path;
-    const pdf_path = pdfFile.path;
+    // Check if files are uploaded
+    let image_path = null;
+    let pdf_path = null;
+
+    if (req.files) {
+      const imageFile = req.files.coverPath ? req.files.coverPath[0] : null;
+      const pdfFile = req.files.pdfPath ? req.files.pdfPath[0] : null;
+
+      if (imageFile) {
+        image_path = imageFile.path;
+      }
+
+      if (pdfFile) {
+        pdf_path = pdfFile.path;
+      }
+    }
+
+    // Create Ebook record
     const ebook = await Ebook.create({
       coverPath: image_path,
       pdfPath: pdf_path,
@@ -59,7 +71,8 @@ console.log(req.files);
       message: "Ebook Added Successfully",
     });
   } catch (err) {
-    res.status(200).json({
+    console.error("Error:", err);
+    res.status(400).json({
       message: "Something went wrong " + err,
     });
   }
@@ -89,15 +102,30 @@ exports.edit = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  const { id, name, description, authorName, coverPath, pdfPath } = req.body;
+  const { id, name, description, authorName } = req.body;
+  let image_path = null;
+  let pdf_path = null;
+
+  if (req.files) {
+    const imageFile = req.files.coverPath ? req.files.coverPath[0] : null;
+    const pdfFile = req.files.pdfPath ? req.files.pdfPath[0] : null;
+
+    if (imageFile) {
+      image_path = imageFile.path;
+    }
+
+    if (pdfFile) {
+      pdf_path = pdfFile.path;
+    }
+  }
   try {
     await Ebook.update(
       {
         name: name,
         description: description,
         authorName: authorName,
-        coverPath: coverPath,
-        pdfPath: pdfPath,
+        coverPath: image_path,
+        pdfPath: pdf_path,
       },
       {
         where: {
