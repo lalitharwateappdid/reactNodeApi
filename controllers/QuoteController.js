@@ -15,13 +15,12 @@ exports.get = async (req, res) => {
 };
 
 exports.create = (req, res) => {
-  const { quote, day_of_year, year } = req.body;
+  const { quote, date } = req.body;
 
   try {
     const quotes = Quote.create({
       quote: quote,
-      day_of_year: day_of_year,
-      year: year,
+      date: date
     });
 
     res.status(200).json({
@@ -80,7 +79,7 @@ exports.edit = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  const { id, quote,year,day_of_year } = req.body;
+  const { id, quote, year, day_of_year } = req.body;
 
   try {
     const quoteupdate = await Quote.findByPk(id);
@@ -89,8 +88,8 @@ exports.update = async (req, res) => {
       await Quote.update(
         {
           quote: quote,
-          year:year,
-          day_of_year:day_of_year
+          year: year,
+          day_of_year: day_of_year
         },
         {
           where: {
