@@ -16,14 +16,6 @@ const BusinessSettings = sequelize.define("business_settings",{
     value:{
         type:DataTypes.TEXT,
         allowNull:true
-    },
-    title:{
-        type:DataTypes.TEXT,
-        allowNull:true
-    },
-    image:{
-        type:DataTypes.TEXT,
-        allowNull:true
     }
 })
 

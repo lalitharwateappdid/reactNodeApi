@@ -23,10 +23,12 @@ exports.uploadFiles = upload.fields([
 
 exports.get = async (req, res) => {
   try {
-    const event = await Ebook.findAll();
+    const events = await Ebook.findAll({
+      attributes: ['id', 'name','coverPath',"pdfPath"]
+    });
 
     res.status(200).json({
-      data: event,
+      data: events,
       status: true,
     });
   } catch (err) {
