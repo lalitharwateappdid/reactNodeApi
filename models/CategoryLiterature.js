@@ -18,7 +18,7 @@ exports.CategoryLiterature = sequelize.define("category_literature",{
 });
 
 CategoryLiterature.associate = models => {
-    CategoryLiterature.belongsTo(models.Category, {
+    CategoryLiterature.belongsTo(models.Sub, {
       foreignKey: 'actorId'
     });
     CategoryLiterature.belongsTo(models.literature, {
