@@ -25,7 +25,11 @@ const SubCategory = sequelize.define("sub_categories",{
     "status":{
         type:DataTypes.BOOLEAN,
         defaultValue:true
-    }
+    },
+    "cover_image":{
+        type:DataTypes.STRING,
+        allowNull:true
+    },
 })
 
 // defining relationships
