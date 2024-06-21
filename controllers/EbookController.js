@@ -103,34 +103,32 @@ exports.edit = async (req, res) => {
 
 exports.update = async (req, res) => {
   const { id, name, description, authorName } = req.body;
-  let image_path = null;
-  let pdf_path = null;
+  let updateFields = {
+    name: name,
+    description: description,
+    authorName: authorName,
+  };
 
-  if (req.files) {
-    const imageFile = req.files.coverPath ? req.files.coverPath[0] : null;
-    const pdfFile = req.files.pdfPath ? req.files.pdfPath[0] : null;
-
-    if (imageFile) {
-      image_path = imageFile.path;
-    }
-
-    if (pdfFile) {
-      pdf_path = pdfFile.path;
-    }
-  }
   try {
+    if (req.files) {
+      // Check for coverPath file
+      if (req.files.coverPath) {
+        const imageFile = req.files.coverPath[0];
+        updateFields.coverPath = imageFile.path;
+      }
+
+      // Check for pdfPath file
+      if (req.files.pdfPath) {
+        const pdfFile = req.files.pdfPath[0];
+        updateFields.pdfPath = pdfFile.path;
+      }
+    }
+
+    // Perform the update with relevant fields
     await Ebook.update(
+      updateFields,
       {
-        name: name,
-        description: description,
-        authorName: authorName,
-        coverPath: image_path,
-        pdfPath: pdf_path,
-      },
-      {
-        where: {
-          id: id,
-        },
+        where: { id: id },
       }
     );
 
@@ -138,7 +136,8 @@ exports.update = async (req, res) => {
       message: "Ebook Updated Successfully",
     });
   } catch (err) {
-    res.status(200).json({
+    console.error("Error:", err);
+    res.status(400).json({
       message: "Something went wrong " + err,
     });
   }
