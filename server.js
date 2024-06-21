@@ -13,7 +13,7 @@ const upload = multer({ dest: 'uploads/' })
 
 // settings cross access origin
 const corsOptions = {
-    origin: ['https://api.shripethekaka.com', "https://api.shripethekaka.com/api/uploads"], // Allow requests from this origin
+    origin: ['https://shripethekaka.com', "https://shripethekaka.com/api/uploads"], // Allow requests from this origin
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow these HTTP methods
     allowedHeaders: [['Content-Type', 'Authorization']],
     Credential: true // Allow these headers
