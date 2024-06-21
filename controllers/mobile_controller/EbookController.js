@@ -4,7 +4,9 @@ const Ebook = require("../../models/EbookModel");
 
 exports.get = async (req, res) => {
     try {
-        const data = await Ebook.findAll()
+        const data = await Ebook.findAll({
+            attributes:['id','name',"coverPath","pdfPath"]
+        })
 
         res.status(200).json({
             "data": data,

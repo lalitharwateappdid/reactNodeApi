@@ -61,7 +61,7 @@ const AuthApi = require("./routes/api/auth/AuthApi");
 const DashboardApi = require("./routes/api/DashboardApi");
 const LiteratureApi = require("./routes/api/LiteratureApi");
 const MasterImageApi = require("./routes/api/MasterImageApi");
-const BusinessSettingsApi = require("./routes/api/")
+const BusinessSettingsApi = require("./routes/api/BusinessSettingsApi")
 const Literature = require("./models/LiteratureModel");
 const Category = require("./models/CategoryModel");
 
@@ -73,7 +73,7 @@ const QuoteMobileApi = require("./routes/mobile_api/QuoteApi");
 const EventMobileApi = require("./routes/mobile_api/EventApi");
 const EbookMobileApi = require("./routes/mobile_api/EbookApi")
 const AuthMobileApi = require("./routes/mobile_api/AuthApi");
-const BusinessSettingsApi = require("./routes/mobile_api/BusinessSettingApi");
+// const BusinessSettingsApi = require("./routes/mobile_api/BusinessSettingApi");
 const CategoryMobileApi = require("./routes/mobile_api/CategoryApi");
 const subcategoryMobileApi = require("./routes/mobile_api/subCategoryApi");
 
@@ -92,6 +92,7 @@ app.use("/api/auth/", AuthApi);
 app.use("/api/dashboard/", DashboardApi);
 app.use("/api/literature/", LiteratureApi);
 app.use("/api/masterimage/", MasterImageApi);
+app.use("/api/business-settings/",BusinessSettingsApi)
 
 // defining mobile routes here
 app.use("/api/v1/content", ContentApi);
@@ -100,7 +101,7 @@ app.use("/api/v1/quote", QuoteMobileApi)
 app.use("/api/v1/event", EventMobileApi)
 app.use("/api/v1/ebook", EbookMobileApi)
 app.use("/api/v1/auth", AuthMobileApi)
-app.use("/api/v1/business-settings",BusinessSettingsApi);
+app.use("/api/v1/business-settings/",BusinessSettingsApi);
 app.use("/api/v1/category",CategoryMobileApi)
 app.use("/api/v1/sub-category",subcategoryMobileApi)
 
