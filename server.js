@@ -61,8 +61,10 @@ const AuthApi = require("./routes/api/auth/AuthApi");
 const DashboardApi = require("./routes/api/DashboardApi");
 const LiteratureApi = require("./routes/api/LiteratureApi");
 const MasterImageApi = require("./routes/api/MasterImageApi");
+const BusinessSettingsApi = require("./routes/api/")
 const Literature = require("./models/LiteratureModel");
 const Category = require("./models/CategoryModel");
+
 
 // calling mobile apis here
 const ContentApi = require("./routes/mobile_api/HomeContentApi");
