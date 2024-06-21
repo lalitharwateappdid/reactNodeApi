@@ -56,7 +56,12 @@ exports.create = async(req,res) => {
         }
 
         else{
-
+            const subcategory = await SubCategory.create({
+                categoryId:category_id,
+                name:name,
+                
+                description:description,
+            })
         }
 
     res.status(200).json({
