@@ -40,18 +40,28 @@ exports.get = async(req,res) => {
 }
 
 exports.create = async(req,res) => {
+    const cover_image = req.file.path;
     const {category_id,name,description} = req.body
 
     try{
-    const subcategory = await SubCategory.create({
-        categoryId:category_id,
-        name:name,
-        description:description,
-    })
+
+        if(cover_image){
+
+            const subcategory = await SubCategory.create({
+                categoryId:category_id,
+                name:name,
+                cover_image:cover_image,
+                description:description,
+            })
+        }
+
+        else{
+
+        }
 
     res.status(200).json({
         "message":"Sub Category Added Successfully",
-        "data":subcategory
+        // "data":subcategory
     })
 }
 catch(err){
