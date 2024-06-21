@@ -11,7 +11,7 @@ const cors = require('cors');
 app.use(bodyParser.json());
 
 // file upload middleware
-const multer  = require('multer')
+const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 
 // settings cross access origin
@@ -20,10 +20,11 @@ const upload = multer({ dest: 'uploads/' })
 
 const MasterImage = require("../../controllers/MasterImageController")
 
-router.post("/create",MasterImage.uploadSingleAvatar,MasterImage.create)
-router.get("/get",MasterImage.get);
-router.put("/status",MasterImage.status);
-router.delete("/destroy",MasterImage.delete);
-router.get("/export",MasterImage.excelExport);
+router.post("/create", MasterImage.uploadSingleAvatar, MasterImage.create)
+router.put("/update", MasterImage.uploadSingleAvatar, MasterImage.update)
+router.get("/get", MasterImage.get);
+router.put("/status", MasterImage.status);
+router.delete("/destroy", MasterImage.delete);
+router.get("/export", MasterImage.excelExport);
 
 module.exports = router

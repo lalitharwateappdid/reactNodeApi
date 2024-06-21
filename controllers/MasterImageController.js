@@ -1,23 +1,23 @@
-const multer  = require('multer');
+const multer = require('multer');
 const MasterImage = require('../models/MasterImageModel');
 
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'uploads/')
+        cb(null, 'uploads/')
     },
     filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      
-      cb(null, Date.now()+file.originalname)
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+
+        cb(null, Date.now() + file.originalname)
     }
-  })
-  
-  const upload = multer({ storage })
+})
+
+const upload = multer({ storage })
 // const upload = multer({ dest: 'uploads/' })
 
 
-exports.create = async(req, res) => {
+exports.create = async (req, res) => {
     console.log(req.body)
     if (!req.file) {
         return res.status(400).json({ message: 'No file uploaded' });
@@ -25,81 +25,103 @@ exports.create = async(req, res) => {
     const filePath = req.file.path;
 
     const data = await MasterImage.create({
-        image:filePath
+        image: filePath
     })
     res.status(200).json({
-        "data":data,
-        "message":"file uploaded successfully"
+        "data": data,
+        "message": "file uploaded successfully"
+    })
+};
+
+exports.update = async (req, res) => {
+    console.log(req.body)
+    const { id } = req.body
+    if (!req.file) {
+        return res.status(400).json({ message: 'No file uploaded' });
+    }
+    const filePath = req.file.path;
+
+    const data = await MasterImage.update({
+        image: filePath,
+
+    }, {
+        where: {
+            id: id
+        }
+    })
+    res.status(200).json({
+        "data": data,
+        "message": "file uploaded successfully"
     })
 };
 
 // image uploading middleware
 exports.uploadSingleAvatar = upload.single('image');
 
-exports.get = async(req,res) => {
-    try{
+exports.get = async (req, res) => {
+    try {
         const data = await MasterImage.findAll()
 
         res.status(200).json({
-            "data":data,
-            
+            "data": data,
+
         })
     }
-    catch(err){
+    catch (err) {
         res.status(400).json({
-            "message":"Something went wrong " + err
+            "message": "Something went wrong " + err
         })
     }
 }
 
-exports.status = async(req,res) => {
-    const {id} = req.body
-    try{
+exports.status = async (req, res) => {
+    const { id } = req.body
+    try {
         const data = await MasterImage.findByPk(id)
 
         data.status = !data.status
         data.save();
 
         res.status(200).json({
-            "message":"Status Updated Sucessfully"
+            "message": "Status Updated Sucessfully"
         })
     }
-    catch(err){
+    catch (err) {
         res.status(400).json({
-            "message":"Something went wrong "+ err 
+            "message": "Something went wrong " + err
         })
     }
 }
 
-exports.delete = async(req,res) => {
-    const {id} = req.body
-    try{
+exports.delete = async (req, res) => {
+    const { id } = req.body
+    try {
         await MasterImage.destroy({
-            where:{
-                id:id
+            where: {
+                id: id
             }
         })
 
         res.status(200).json({
-            "message":"Image Deleted Successfully"
+            "message": "Image Deleted Successfully"
         })
-    }   
-    catch(err){
+    }
+    catch (err) {
         res.status(400).json({
-            "message":"Something went wrong " + err
+            "message": "Something went wrong " + err
         })
     }
 }
 
-exports.excelExport = async(req,response) => {
-    try{
+exports.excelExport = async (req, response) => {
+    try {
         const data = await MasterImage.findAll();
-        
+
         var mysql_data = JSON.parse(JSON.stringify(data));
         // defining csv header
-        let header = ['id','image','status'];
+        let header = ['id', 'image', 'status'];
 
-        var json_data = new data_exporter({header});
+        var json_data = new data_exporter({ header });
 
         var csv_data = json_data.parse(mysql_data);
 
@@ -111,9 +133,9 @@ exports.excelExport = async(req,response) => {
 
     }
 
-    catch(err){
+    catch (err) {
         response.status(400).json({
-            "message":"Something went wrong"
+            "message": "Something went wrong"
         })
     }
 }
