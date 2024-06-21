@@ -23,3 +23,19 @@ exports.create = async(req,res) => {
         })
     }
 }
+
+
+exports.get = async(req,res) => {
+    try{
+        const data = BusinessSettings.findAll()
+
+        res.status(200).json({
+            "data":data
+        })
+    }
+    catch(err){
+        res.status(400).json({
+            "message":"Something went wrong " + err
+        })
+    }
+}
