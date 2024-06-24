@@ -1,5 +1,5 @@
 const db = require("../../database/database");
-const Literature
+// const Literature
 
 
 exports.get = async(req,res) => {
