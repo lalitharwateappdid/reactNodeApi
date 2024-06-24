@@ -28,12 +28,17 @@ exports.create = async(req,res) => {
 exports.get = async(req,res) => {
     try{
         const data = await BusinessSettings.findAll({
+            attributes: ["key", "value"],
+          });
+          const keyValuePairs = {};
+      
+          data.forEach((instance) => {
             
-        })
-        // console.log(data)
+          keyValuePairs[instance.key] = instance.value;
+          });
 
         res.status(200).json({
-            "data":data
+            "data":keyValuePairs
         })
     }
     catch(err){
