@@ -4,7 +4,7 @@ const Literature  = require("./../../models/LiteratureModel")
 
 
 exports.get = async(req,res) => {
-    const {id} = req.body
+    const {id} = req.query
     try{
         const data = await Literature.findAll(
            {
