@@ -1,29 +1,48 @@
 const BusinessSettings = require("./../models/BusinessSettingModel")
 
 exports.create = async(req,res) => {
-    try{
-        const requestData = req.body;
-        console.log(req.body)
-        res.status(200).json({
-            "data" : req.body
-        })
+    // console.log(req.body)
+   
+        
+    try {
+        let data = req.body; 
 
-    // Iterate through each key-value pair in the request body
-    for (const key in requestData) {
-      if (requestData.hasOwnProperty(key)) {
-        const value = requestData[key];
+        
+        if (!Array.isArray(data)) {
+            data = Object.entries(data).map(([key, value]) => ({ key, value }));
+        }
 
-        // Update or create a BusinessSetting record based on 'key'
-        await BusinessSettings.upsert({
-          key: key,
-          value: value
+      
+       
+
+        data.forEach(({ key, value }) => {
+            const existingRecord = BusinessSettings.findOne({ where: { key: key } });
+
+            upsertPromises.push(
+                existingRecord.then(existing => {
+                    if (existing) {
+                        // Update the existing record
+                        return existing.update({ value: value });
+                    } else {
+                        // Create a new record
+                        return BusinessSettings.create({ key: key, value: value });
+                    }
+                })
+            );
         });
-      }
+
+        await Promise.all(upsertPromises);
+
+        res.status(200).json({
+            message: "Data Updated Successfully",
+            status: true
+        });
     }
-}
+    
+
     catch(err){
         res.status(400).json({
-            "message":"Something went wrong"
+            "message":"Something went wrong " + err
         })
     }
 }
