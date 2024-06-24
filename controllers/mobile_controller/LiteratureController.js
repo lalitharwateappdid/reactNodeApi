@@ -1,12 +1,13 @@
 const db = require("../../database/database");
 // const Literature
+const Literature  = require("./../../models/LiteratureModel")
 
 
 exports.get = async(req,res) => {
     const {id} = req.body
     try{
-        const data = await CategoryLiterature.findAll(
-         
+        const data = await Literature.findAll(
+            
         )
 
         res.status(200).json({
