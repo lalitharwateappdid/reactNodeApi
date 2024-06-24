@@ -3,17 +3,17 @@ const bodyParser = require('body-parser');
 const express = require("express");
 const app = express();
 app.use(express.json())
-const path = require("path")
+// const path = require("path")
 const cors = require('cors');
 app.use(bodyParser.json());
 
 // file upload middleware
 const multer = require('multer')
-const upload = multer({ dest: 'uploads/' })
+// const upload = multer({ dest: 'uploads/' })
 
 // settings cross access origin
 const corsOptions = {
-    origin: ['https://shripethekaka.com','https://shripethekaka.com/api/uploads'], // Allow requests from this origin
+    origin: ['http://localhost:5173', "http://localhost:5173/api/uploads/",], 
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow these HTTP methods
     allowedHeaders: [['Content-Type', 'Authorization']],
     Credential: true // Allow these headers
@@ -61,9 +61,10 @@ const AuthApi = require("./routes/api/auth/AuthApi");
 const DashboardApi = require("./routes/api/DashboardApi");
 const LiteratureApi = require("./routes/api/LiteratureApi");
 const MasterImageApi = require("./routes/api/MasterImageApi");
-// const BusinessSettingsApi = require("./routes/api/BusinessSettingsApi")
-const Literature = require("./models/LiteratureModel");
-const Category = require("./models/CategoryModel");
+const BusinessSettingsApi = require("./routes/api/BusinessSettingsApi")
+
+// const Literature = require("./models/LiteratureModel");
+// const Category = require("./models/CategoryModel");
 
 
 // calling mobile apis here
@@ -73,6 +74,7 @@ const QuoteMobileApi = require("./routes/mobile_api/QuoteApi");
 const EventMobileApi = require("./routes/mobile_api/EventApi");
 const EbookMobileApi = require("./routes/mobile_api/EbookApi")
 const AuthMobileApi = require("./routes/mobile_api/AuthApi");
+const CategoryLiteratureApi = require("./routes/mobile_api/LiteratureApi");
 // const BusinessSettingsApi = require("./routes/mobile_api/BusinessSettingApi");
 const CategoryMobileApi = require("./routes/mobile_api/CategoryApi");
 const subcategoryMobileApi = require("./routes/mobile_api/subCategoryApi");
@@ -92,7 +94,7 @@ app.use("/api/auth/", AuthApi);
 app.use("/api/dashboard/", DashboardApi);
 app.use("/api/literature/", LiteratureApi);
 app.use("/api/masterimage/", MasterImageApi);
-// app.use("/api/business-settings/",BusinessSettingsApi)
+app.use("/api/business-settings/",BusinessSettingsApi)
 
 // defining mobile routes here
 app.use("/api/v1/content", ContentApi);
@@ -104,6 +106,7 @@ app.use("/api/v1/auth", AuthMobileApi)
 // app.use("/api/v1/business-settings/",BusinessSettingsApi);
 app.use("/api/v1/category",CategoryMobileApi)
 app.use("/api/v1/sub-category",subcategoryMobileApi)
+app.use("/api/v1/literature",CategoryLiteratureApi)
 
 // m:m relationship 
 // Literature.belongsToMany(Category, { through: "category_literature" })
@@ -117,14 +120,14 @@ app.get('/api', (req, res) => {
 });
 
 // when on local 👇
-// app.listen(process.env.PORT, () => {
-//     console.log(`Server is Up & Running on port ${process.env.PORT}`);
-// });
+app.listen(process.env.PORT, () => {
+    console.log(`Server is Up & Running on port ${process.env.PORT}`);
+});
 
 // when hosting;👇
-app.listen(process.env.PORT,process.env.IP_PORT, () => {
-    console.log(`Server is Hosted and Running: ${process.env.PORT}`);
-});
+// app.listen(process.env.PORT,process.env.IP_PORT, () => {
+//     console.log(`Server is Hosted and Running: ${process.env.PORT}`);
+// });
 
 // sychronize models
 sequelize.sync({ alter: true })
