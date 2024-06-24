@@ -3,6 +3,7 @@ const Event = require("../../models/EventModel");
 const { Op } = require('sequelize');
 
 exports.get = async (req, res) => {
+   
     try {
         const data = await Event.findAll({
             where:{
