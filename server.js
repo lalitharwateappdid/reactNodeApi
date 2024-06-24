@@ -41,6 +41,7 @@ require('./models/EventModel');
 require("./models/UserModel");
 require("./models/LiteratureModel")
 require("./models/MasterImageModel")
+require("./models/NotificationModel")
 // require("./models/BusinessSettingModel")
 // require("./models/CategoryLiterature")
 
@@ -120,14 +121,14 @@ app.get('/api', (req, res) => {
 });
 
 // when on local 👇
-app.listen(process.env.PORT, () => {
-    console.log(`Server is Up & Running on port ${process.env.PORT}`);
-});
+// app.listen(process.env.PORT, () => {
+//     console.log(`Server is Up & Running on port ${process.env.PORT}`);
+// });
 
 // when hosting;👇
-// app.listen(process.env.PORT,process.env.IP_PORT, () => {
-//     console.log(`Server is Hosted and Running: ${process.env.PORT}`);
-// });
+app.listen(process.env.PORT,process.env.IP_PORT, () => {
+    console.log(`Server is Hosted and Running: ${process.env.PORT}`);
+});
 
 // sychronize models
 sequelize.sync({ alter: true })

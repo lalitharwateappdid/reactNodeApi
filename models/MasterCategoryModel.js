@@ -4,7 +4,7 @@ const sequelize = require("../database/database");
 
 const MasterCategory = sequelize.define("master_categories",{
     "id":{
-        tyoe:DataTypes.INTEGER,
+        type:DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement:true
     },
