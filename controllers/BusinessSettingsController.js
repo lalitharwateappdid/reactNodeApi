@@ -1,8 +1,8 @@
 const BusinessSettings = require("./../models/BusinessSettingModel")
 
 exports.create = async(req,res) => {
-    // console.log(req.body)
-   
+    console.log(req)
+    const upsertPromises = [];
         
     try {
         let data = req.body; 
