@@ -19,7 +19,7 @@ exports.uploadSingleAvatar = upload.single('image');
 exports.create = async(req,res) => {
     console.log(req)
     const upsertPromises = [];
-        
+    
     try {
         let data = req.body; 
 
