@@ -6,12 +6,12 @@ exports.get = async (req, res) => {
    
     try {
         const data = await Event.findAll({
-            where:{
-                status:true,
-                event_date:{
-                    [Op.gte]:Date.now()
-                }
-            },
+            // where:{
+            //     status:true,
+            //     event_date:{
+            //         [Op.gte]:Date.now()
+            //     }
+            // },
             order:[['event_date','ASC']]
         })
 
