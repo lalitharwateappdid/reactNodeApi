@@ -1,5 +1,5 @@
 const db = require("../../database/database");
-const HomeContent = require("../../models/HomeContentModel");
+const HomeContent = require("../../models/HomeContentModel"); 
 
 
 exports.get = async (req, res) => {
