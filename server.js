@@ -104,7 +104,7 @@ app.use("/api/v1/quote", QuoteMobileApi)
 app.use("/api/v1/event", EventMobileApi)
 app.use("/api/v1/ebook", EbookMobileApi)
 app.use("/api/v1/auth", AuthMobileApi)
-app.use("/api/v1/business-settings/",BusinessSettingsMobileApi);
+app.use("/api/v1/business-settings",BusinessSettingsMobileApi);
 app.use("/api/v1/category",CategoryMobileApi)
 app.use("/api/v1/sub-category",subcategoryMobileApi)
 app.use("/api/v1/literature",CategoryLiteratureApi)
