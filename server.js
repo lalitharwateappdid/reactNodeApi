@@ -76,7 +76,7 @@ const EventMobileApi = require("./routes/mobile_api/EventApi");
 const EbookMobileApi = require("./routes/mobile_api/EbookApi")
 const AuthMobileApi = require("./routes/mobile_api/AuthApi");
 const CategoryLiteratureApi = require("./routes/mobile_api/LiteratureApi");
-// const BusinessSettingsApi = require("./routes/mobile_api/BusinessSettingApi");
+const BusinessSettingsMobileApi = require("./routes/mobile_api/BusinessSettingApi");
 const CategoryMobileApi = require("./routes/mobile_api/CategoryApi");
 const subcategoryMobileApi = require("./routes/mobile_api/subCategoryApi");
 
@@ -104,7 +104,7 @@ app.use("/api/v1/quote", QuoteMobileApi)
 app.use("/api/v1/event", EventMobileApi)
 app.use("/api/v1/ebook", EbookMobileApi)
 app.use("/api/v1/auth", AuthMobileApi)
-// app.use("/api/v1/business-settings/",BusinessSettingsApi);
+app.use("/api/v1/business-settings/",BusinessSettingsMobileApi);
 app.use("/api/v1/category",CategoryMobileApi)
 app.use("/api/v1/sub-category",subcategoryMobileApi)
 app.use("/api/v1/literature",CategoryLiteratureApi)
@@ -121,14 +121,14 @@ app.get('/api', (req, res) => {
 });
 
 // when on local 👇
-// app.listen(process.env.PORT, () => {
-//     console.log(`Server is Up & Running on port ${process.env.PORT}`);
-// });
+app.listen(process.env.PORT, () => {
+    console.log(`Server is Up & Running on port ${process.env.PORT}`);
+});
 
 // when hosting;👇
-app.listen(process.env.PORT,process.env.IP_PORT, () => {
-    console.log(`Server is Hosted and Running: ${process.env.PORT}`);
-});
+// app.listen(process.env.PORT,process.env.IP_PORT, () => {
+//     console.log(`Server is Hosted and Running: ${process.env.PORT}`);
+// });
 
 // sychronize models
 sequelize.sync({ alter: true })

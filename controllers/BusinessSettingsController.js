@@ -27,8 +27,11 @@ exports.create = async(req,res) => {
 
 exports.get = async(req,res) => {
     try{
-        const data = await BusinessSettings.findAll()
-        console.log(data)
+        const data = await BusinessSettings.findAll({
+            
+        })
+        // console.log(data)
+
         res.status(200).json({
             "data":data
         })
