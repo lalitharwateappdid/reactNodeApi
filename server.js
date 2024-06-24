@@ -124,7 +124,7 @@ app.get('/api', (req, res) => {
 app.listen(process.env.PORT, () => {
     console.log(`Server is Up & Running on port ${process.env.PORT}`);
 });
-
+ 
 // when hosting;👇
 // app.listen(process.env.PORT,process.env.IP_PORT, () => {
 //     console.log(`Server is Hosted and Running: ${process.env.PORT}`);
