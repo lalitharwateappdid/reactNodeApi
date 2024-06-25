@@ -14,7 +14,7 @@ const multer = require('multer')
 
 // settings cross access origin
 const corsOptions = {
-    origin: ['http://localhost:5173', "http://localhost:5173/api/uploads/",], 
+    origin: ['http://localhost:5173', "http://localhost:5173/api/uploads/",'https://shripethekaka.com','https://shripethekaka.com/api/uploads/'], 
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow these HTTP methods
     allowedHeaders: [['Content-Type', 'Authorization']],
     Credential: true // Allow these headers
