@@ -6,6 +6,7 @@ app.use(express.json())
 // const path = require("path")
 const cors = require('cors');
 app.use(bodyParser.json());
+const cron = require("node-cron")
 
 // file upload middleware
 const multer = require('multer')
@@ -45,8 +46,9 @@ require("./models/NotificationModel")
 // require("./models/BusinessSettingModel")
 // require("./models/CategoryLiterature")
 
-
-
+// callings cron jobs here
+const notify = require("./routes/mobile_api/NotificationApi")
+cron.schedule('* * * * *', notify);
 
 // calling routes here
 const bookApiRoute = require("./routes/api/BookApi");
@@ -119,6 +121,12 @@ app.get('/api', (req, res) => {
         "message": "Server is running"
     });
 });
+
+// cron job test use this to test cron 👇
+// cron.schedule('32 12 * * *', () => {
+//     console.log('Running a task every minute');
+    
+// });
 
 // when on local 👇
 app.listen(process.env.PORT, () => {
