@@ -46,9 +46,7 @@ require("./models/NotificationModel")
 // require("./models/BusinessSettingModel")
 // require("./models/CategoryLiterature")
 
-// callings cron jobs here
-const notify = require("./routes/mobile_api/NotificationApi")
-cron.schedule('* * * * *', notify);
+
 
 // calling routes here
 const bookApiRoute = require("./routes/api/BookApi");
@@ -68,6 +66,9 @@ const BusinessSettingsApi = require("./routes/api/BusinessSettingsApi")
 
 // const Literature = require("./models/LiteratureModel");
 // const Category = require("./models/CategoryModel");
+// callings cron jobs here
+const notify = require("./routes/mobile_api/NotificationApi")
+cron.schedule('* * * * *', notify);
 
 
 // calling mobile apis here
