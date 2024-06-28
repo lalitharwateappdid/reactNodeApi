@@ -8,7 +8,7 @@ exports.get = async(req,res) => {
     const {id} = req.query
     try {
         const literature = await Literature.findAll({
-          where: { id }, // Filter by categoryId
+          where: { categoryId:id }, // Filter by categoryId
           include: [
             {
               model: Category,
