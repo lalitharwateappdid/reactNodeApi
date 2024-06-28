@@ -31,6 +31,7 @@ process.env.TZ = "Asia/Kolkata"
 
 // calling models here to synchronize
 const sequelize = require("./database/database");
+// require("./models/MasterCategoryModel")
 require("./models/YoutubeMedia");
 require("./models/QuoteModel");
 require("./models/BookModel");
@@ -43,6 +44,7 @@ require("./models/UserModel");
 require("./models/LiteratureModel")
 require("./models/MasterImageModel")
 require("./models/NotificationModel")
+
 // require("./models/BusinessSettingModel")
 // require("./models/CategoryLiterature")
 

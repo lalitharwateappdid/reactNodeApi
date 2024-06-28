@@ -25,10 +25,10 @@ exports.uploadFiles = upload.single("coverImage");
 exports.get = async (req, res) => {
   try {
     const category = await Category.findAll({
-      order:[['id','DESC']],
-      include:[{
-        model:Subcategory
-      }]
+      where: { parentId: null }, // Fetch top-level categories (where parentId is null)
+      include: [
+        { model: Category, as: 'relatedCategories'}
+      ]
   },
 );
     res.status(200).json({
