@@ -12,7 +12,7 @@ exports.get = async(req,res) => {
           include: [
             {
               model: Category,
-              attributes: ['id', 'masterCategory', 'description', 'cover_image', 'status'], // Specify attributes to include from Category
+              
               as: 'category' // Alias for the included Category model
             }
           ]
@@ -41,7 +41,7 @@ exports.getRandom = async (req, res) => {
             include: [
                 {
                     model: Category,
-                    attributes: ['id', 'masterCategory', 'description', 'cover_image', 'status'],
+                    
                     as: 'category'
                 }
             ],
