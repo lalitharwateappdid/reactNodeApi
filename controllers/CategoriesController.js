@@ -62,7 +62,7 @@ exports.create = async (req, res) => {
 
   try {
     const category = await Category.create({
-      name: name,
+      title: name,
       description: description,
     });
 
@@ -136,7 +136,7 @@ exports.update = async (req, res) => {
     if (category) {
       await Category.update(
         {
-          name: name,
+          title: name,
           cover_image:cover_image,
           description: description,
           // cover_image:cover_image
