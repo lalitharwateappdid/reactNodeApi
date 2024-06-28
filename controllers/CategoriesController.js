@@ -22,22 +22,38 @@ exports.uploadFiles = upload.single("coverImage");
 
 
 
+const fetchCategoriesRecursively = async (categories) => {
+  if (!Array.isArray(categories)) {
+    categories = [categories];
+  }
+
+  for (let category of categories) {
+    // Fetch related categories recursively
+    const relatedCategories = await category.getRelatedCategories();
+    if (relatedCategories && relatedCategories.length > 0) {
+      category.dataValues.relatedCategories = relatedCategories;
+      await fetchCategoriesRecursively(relatedCategories);
+    }
+  }
+};
+
 exports.get = async (req, res) => {
   try {
-    const category = await Category.findAll({
-      where: { parentId: null }, // Fetch top-level categories (where parentId is null)
+    // Fetch top-level categories
+    let categories = await Category.findAll({
+      where: { parentId: null }, // Assuming top-level categories have parentId as null
       include: [
-        { model: Category, as: 'relatedCategories'}
+        { model: Category, as: 'relatedCategories' } // Include related categories
       ]
-  },
-);
-    res.status(200).json({
-      data: category,
     });
-  } catch (err) {
-    res.status(400).json({
-      message: "Something went wrong " + err,
-    });
+
+    // Fetch related categories recursively for each top-level category
+    await fetchCategoriesRecursively(categories);
+
+    res.json(categories);
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 

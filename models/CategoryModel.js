@@ -1,11 +1,15 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../database/database");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../database/database');
 
-const Category = sequelize.define("Categories", {
+const Category = sequelize.define('Categories', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true
+  },
+  title: {
+    type: DataTypes.STRING,
+    allowNull: true
   },
   masterCategory: {
     type: DataTypes.STRING,
@@ -22,48 +26,25 @@ const Category = sequelize.define("Categories", {
   status: {
     type: DataTypes.BOOLEAN,
     defaultValue: true
-  }
+  },
+ 
+
 });
 
-
-
-// Define self-referencing association (parent-child relationship)
-// Category.hasMany(Category, { as: 'children', foreignKey: 'parentId' });
-// Category.belongsTo(Category, { as: 'parent', foreignKey: 'parentId' });
+// Define many-to-many relationship with itself (Category)
 Category.belongsToMany(Category, {
-    through: 'CategoryRelationship', // This is the join table name
-    as: 'relatedCategories', // Alias for the relation
-    foreignKey: 'categoryId',
-    otherKey: 'relatedCategoryId'
-  });
-  
-  // Ensure the association is bidirectional
-  Category.belongsToMany(Category, {
-    through: 'CategoryRelationship',
-    as: 'relatedToCategories',
-    foreignKey: 'relatedCategoryId',
-    otherKey: 'categoryId'
-  });
-  
+  through: 'CategoryRelationship',
+  as: 'relatedCategories',
+  foreignKey: 'categoryId',
+  otherKey: 'relatedCategoryId'
+});
 
-// Category.addHook('afterFind', async (categories) => {
-//     if (!Array.isArray(categories)) {
-//       categories = [categories];
-//     }
-  
-//     const fetchChildren = async (category) => {
-//       const children = await category.getChildren();
-//       if (children && children.length > 0) {
-//         category.dataValues.children = children;
-//         for (const child of children) {
-//           await fetchChildren(child);
-//         }
-//       }
-//     };
-  
-//     for (const category of categories) {
-//       await fetchChildren(category);
-//     }
-//   });
+// Ensure bidirectional association
+Category.belongsToMany(Category, {
+  through: 'CategoryRelationship',
+  as: 'relatedToCategories',
+  foreignKey: 'relatedCategoryId',
+  otherKey: 'categoryId'
+});
 
 module.exports = Category;

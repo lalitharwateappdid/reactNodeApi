@@ -1,27 +1,76 @@
 const db = require("../../database/database");
 const Category = require("../../models/CategoryModel");
-const Subcategory = require("../../models/SubCategoryModel") 
+const Subcategory = require("../../models/SubCategoryModel");
 
-exports.get = async(req,res) => {
-    try{
-        const data = await Category.findAll({
-            where:{
-                status:true
-            },
-            include: [{
-                model: Subcategory,
-               
-              }]
-        })
+const fetchCategoriesRecursively = async (categories, depth) => {
+    if (!Array.isArray(categories)) {
+        categories = [categories];
+    }
 
-        res.status(200).json({
-            "data":data,
-            "status":true
-        })
+    for (let category of categories) {
+        // Fetch related categories only once (one level deep)
+        const relatedCategories = await category.getRelatedCategories();
+
+        // Ensure relatedCategories is an array and set default empty array if no children
+        category.dataValues.relatedCategories = relatedCategories || [];
+
+        // Limit recursion to one level deep
+        if (depth > 0) {
+            await fetchCategoriesRecursively(category.dataValues.relatedCategories, depth - 1);
+        }
     }
-    catch(err){
-        res.status(400).json({
-            "message":"Something went wrong " + err
-        })
+};
+
+exports.get = async (req, res) => {
+    try {
+        // Fetch top-level categories
+        let categories = await Category.findAll({
+            where: { parentId: null }, // Assuming top-level categories have parentId as null
+            include: [
+                { model: Category, as: 'relatedCategories' } // Include related categories
+            ]
+        });
+
+        // Fetch related categories recursively for each top-level category
+        await fetchCategoriesRecursively(categories);
+
+        // Ensure categories is an array and set default empty array if no top-level categories
+        categories = categories || [];
+
+        res.json({
+            data: categories,
+            status: false
+        });
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+        res.status(500).json({ message: 'Internal server error' });
     }
-}
+};
+
+
+exports.getByid = async (req, res) => {
+    const { id } = req.query;
+    
+    try {
+        let categories = await Category.findAll({
+            where: { parentId: id },
+            include: [
+                { model: Category, as: 'relatedCategories' }
+            ]
+        });
+
+        // Fetch related categories recursively for each top-level category, limited to one level deep
+        await fetchCategoriesRecursively(categories, 1);
+
+        // Ensure categories is an array and set default empty array if no top-level categories
+        categories = categories || [];
+
+        res.json({
+            data: categories,
+            status: false
+        });
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};

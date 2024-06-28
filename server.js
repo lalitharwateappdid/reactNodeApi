@@ -69,8 +69,8 @@ const BusinessSettingsApi = require("./routes/api/BusinessSettingsApi")
 // const Literature = require("./models/LiteratureModel");
 // const Category = require("./models/CategoryModel");
 // callings cron jobs here
-const notify = require("./routes/mobile_api/NotificationApi")
-cron.schedule('* * * * *', notify);
+// const notify = require("./routes/mobile_api/NotificationApi")
+// cron.schedule('* * * * *', notify);
 
 
 // calling mobile apis here
@@ -132,16 +132,16 @@ app.get('/api', (req, res) => {
 // });
 
 // when on local 👇
-app.listen(process.env.PORT, () => {
-    console.log(`Server is Up & Running on port ${process.env.PORT}`);
-});
- 
-// when hosting;👇
-// app.listen(process.env.PORT,process.env.IP_PORT, () => {
-//     console.log(`Server is Hosted and Running: ${process.env.PORT}`);
+// app.listen(process.env.PORT, () => {
+//     console.log(`Server is Up & Running on port ${process.env.PORT}`);
 // });
 
+// when hosting;👇
+app.listen(process.env.PORT,process.env.IP_PORT, () => {
+    console.log(`Server is Hosted and Running: ${process.env.PORT}`);
+});
+
 // sychronize models
-sequelize.sync({ alter: true })
+sequelize.sync()
 
 
