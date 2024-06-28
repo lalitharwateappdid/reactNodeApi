@@ -114,7 +114,7 @@ app.use("/api/v1/category",CategoryMobileApi)
 app.use("/api/v1/sub-category",subcategoryMobileApi)
 app.use("/api/v1/literature",CategoryLiteratureApi)
 
-// m:m relationship 
+// m:m relationship  
 // Literature.belongsToMany(Category, { through: "category_literature" })
 // Category.belongsToMany(Literature, { through: "category_literature" })
 // test route
