@@ -53,12 +53,9 @@ exports.getByid = async (req, res) => {
     
     try {
         let categories = await Category.findAll({
+            where: { parentId: id },
             include: [
-                {
-                    model: Category,
-                   
-                    as: 'categories' // Alias for the included Literature model
-                }
+                { model: Category, as: 'relatedCategories' }
             ]
         });
 
@@ -74,6 +71,6 @@ exports.getByid = async (req, res) => {
         });
     } catch (error) {
         console.error('Error fetching categories:', error);
-        res.status(500).json({ message: 'Internal server error' + error });
+        res.status(500).json({ message: 'Internal server error' });
     }
 };
