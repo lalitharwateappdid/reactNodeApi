@@ -25,7 +25,7 @@ exports.get = async (req, res) => {
     try {
         // Fetch top-level categories
         let categories = await Category.findAll({
-            // where: { parentId: null }, // Assuming top-level categories have parentId as null
+            where: { categoryId:id }, // Filter by categoryId// Assuming top-level categories have parentId as null
             include: [
                 { model: Category, as: 'relatedCategories' } // Include related categories
             ]
