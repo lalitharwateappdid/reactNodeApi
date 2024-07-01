@@ -49,12 +49,12 @@ exports.get = async (req, res) => {
 
 
 exports.getByid = async (req, res) => {
-    const { id } = req.query;
+    const { categoryId } = req.query;
     
     try {
         const categories = await Category.findAll({
             where:{
-                id:id
+                id:categoryId
             }
         }, {
             include: [
