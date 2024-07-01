@@ -127,7 +127,7 @@ exports.edit = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  const { id, name, description } = req.body;
+  const { id, title, description } = req.body;
   const cover_image = req.file.path;
 
   // const cover_path = cover_image.path;
@@ -136,7 +136,7 @@ exports.update = async (req, res) => {
     if (category) {
       await Category.update(
         {
-          title: name,
+          title: title,
           cover_image:cover_image,
           description: description,
           // cover_image:cover_image
