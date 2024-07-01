@@ -5,11 +5,7 @@ const { Op } = require('sequelize');
 
 
 exports.get = async (req, res) => {
-<<<<<<< HEAD
-
-=======
     
->>>>>>> 730228236e965f40a1cbd6eab4c6980f298f62b4
     
     try {
         const data = await Quote.findOne({
