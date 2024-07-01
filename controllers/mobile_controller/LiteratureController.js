@@ -7,7 +7,7 @@ const Category = require("../../models/CategoryModel")
 exports.get = async(req,res) => {
     const {id} = req.query
     try {
-        const literature = await Literature.findOne({
+        const literature = await Literature.findAll({
           where: { categoryId:id }, // Filter by categoryId
           include: [
             {
