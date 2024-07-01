@@ -4,6 +4,7 @@ const { Op } = require('sequelize');
 
 
 exports.get = async (req, res) => {
+    return "Hello"
     
     try {
         const data = await Quote.findOne({
@@ -11,6 +12,7 @@ exports.get = async (req, res) => {
                 date:Date.now()
             }
         })
+
 
         res.status(200).json({
             "data": data,
