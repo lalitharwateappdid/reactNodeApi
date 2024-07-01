@@ -11,6 +11,7 @@ const Category = sequelize.define('Categories', {
     type: DataTypes.STRING,
     allowNull: true
   },
+  
   masterCategory: {
     type: DataTypes.STRING,
     allowNull: true

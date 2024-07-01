@@ -142,6 +142,6 @@ app.listen(process.env.PORT, () => {
 // });
 
 // sychronize models
-sequelize.sync()
+sequelize.sync({alter:true})
 
 
