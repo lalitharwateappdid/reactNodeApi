@@ -7,7 +7,7 @@ const Category = require("../../models/CategoryModel")
 exports.get = async(req,res) => {
     const {id} = req.query
     try {
-        const literature = await Literature.findAll({
+        const literature = await Literature.findOne({
           where: { categoryId:id }, // Filter by categoryId
           include: [
             {
@@ -45,9 +45,8 @@ exports.getRandom = async (req, res) => {
                     as: 'category'
                 }
             ],
-            order: [db.literal('RAND()')], // For MySQL/MariaDB
-            // order: db.literal('RANDOM()'), // For PostgreSQL
-            // order: db.literal('RANDOM()'), // For SQLite
+            order: [db.literal('RAND()')], 
+          
         });
 
         if (!literature) {
