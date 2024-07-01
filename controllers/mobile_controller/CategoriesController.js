@@ -57,14 +57,7 @@ exports.getByid = async (req, res) => {
             where: {
                 id: id
             },
-            include: [
-                {
-                    model: Category,
-                    as: 'relatedCategories', // Alias for the related categories
-                    through: { attributes: [] }, // Exclude attributes from join table
-                    attributes: ['id'], // Select only the id column from related categories
-                }
-            ]
+            
         });
 
         // Check if categories exist and fetch related categories recursively
