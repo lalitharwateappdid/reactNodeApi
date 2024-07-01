@@ -25,7 +25,7 @@ exports.create = async (req, res) => {
     const filePath = req.file.path;
 
     const data = await MasterImage.create({
-        image: filePath
+        cover_image: filePath
     })
     res.status(200).json({
         "data": data,
@@ -42,7 +42,7 @@ exports.update = async (req, res) => {
     const filePath = req.file.path;
 
     const data = await MasterImage.update({
-        image: filePath,
+        cover_image: filePath,
 
     }, {
         where: {
