@@ -20,7 +20,7 @@ exports.get = async(req,res) => {
     
         if (!literature || literature.length === 0) {
           return res.status(200).json({ 
-            data:{},
+            data:[],
             message: 'No literature found for the specified category' });
         }
     
