@@ -56,11 +56,8 @@ exports.getByid = async (req, res) => {
             include: [
                 {
                     model: Category,
-                    through: {
-                        model: CategoryLiterature,
-                        where: { categoryId:id }, // Filter by categoryId }
-                    },
-                    as: 'literatures' // Alias for the included Literature model
+                   
+                    // as: 'literatures' // Alias for the included Literature model
                 }
             ]
         });
