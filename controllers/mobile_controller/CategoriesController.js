@@ -52,35 +52,34 @@ exports.getByid = async (req, res) => {
     const { categoryId } = req.query;
     
     try {
-        const categories = await Category.findAll({
-            where:{
-                id:categoryId
-            }
-        }, {
+        // Fetch categories based on categoryId
+        let categories = await Category.findAll({
+            where: {
+                id: categoryId
+            },
             include: [
                 {
                     model: Category,
                     as: 'relatedCategories', // Alias for the related categories
-                    // through: { attributes: [] }, // Exclude attributes from join table
+                    through: { attributes: [] }, // Exclude attributes from join table
                     attributes: ['id'], // Select only the id column from related categories
                 }
-
-            
             ]
         });
 
-        // Fetch related categories recursively for each top-level category, limited to one level deep
-        await fetchCategoriesRecursively(categories, 1);
-
-        // Ensure categories is an array and set default empty array if no top-level categories
-        categories = categories || [];
+        // Check if categories exist and fetch related categories recursively
+        if (categories.length > 0) {
+            await fetchCategoriesRecursively(categories, 1);
+        } else {
+            categories = []; // Set categories to an empty array if no categories found
+        }
 
         res.json({
             data: categories,
-            status: false
+            status: true
         });
     } catch (error) {
         console.error('Error fetching categories:', error);
-        res.status(500).json({ message: 'Internal server error' + error });
+        res.status(500).json({ message: 'Internal server error', error: error.message });
     }
 };
