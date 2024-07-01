@@ -25,10 +25,10 @@ exports.get = async (req, res) => {
     try {
         // Fetch top-level categories
         let categories = await Category.findAll({
-            where: { masterCategory:1}, // Filter by categoryId// Assuming top-level categories have parentId as null
-            // include: [
-            //     { model: Category, as: 'relatedCategories' } // Include related categories
-            // ]
+            where: { parentId: null }, // Assuming top-level categories have parentId as null
+            include: [
+                { model: Category, as: 'relatedCategories' } // Include related categories
+            ]
         });
 
         // Fetch related categories recursively for each top-level category
@@ -53,7 +53,7 @@ exports.getByid = async (req, res) => {
     
     try {
         let categories = await Category.findAll({
-            where: { masterCategory:id }, 
+            where: { parentId: id },
             include: [
                 { model: Category, as: 'relatedCategories' }
             ]
