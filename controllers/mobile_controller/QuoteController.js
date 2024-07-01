@@ -2,7 +2,7 @@ const db = require("../../database/database");
 const Quote = require("../../models/QuoteModel");
 const { Op } = require('sequelize');
 
-return Quote
+
 
 exports.get = async (req, res) => {
     
