@@ -52,7 +52,7 @@ exports.getByid = async (req, res) => {
     const { id } = req.query;
     
     try {
-        const categories = await Category.findByPk(id, {
+        const categories = await Category.findAll(id, {
             include: [
                 {
                     model: Category,
