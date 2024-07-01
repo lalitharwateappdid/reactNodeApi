@@ -8,7 +8,7 @@ const fetchCategoriesRecursively = async (categories, depth) => {
     }
 
     for (let category of categories) {
-        // Fetch related categories only once (one level deep)
+        // Fetch related categories only once (one level deep) asasd
         const relatedCategories = await category.getRelatedCategories();
 
         // Ensure relatedCategories is an array and set default empty array if no children
@@ -52,8 +52,8 @@ exports.getByid = async (req, res) => {
     const { id } = req.query;
     
     try {
-        // Fetch categories based on categoryId
-        let categories = await Category.findOne({
+        // Fetch categories based on categoryId 
+        let categories = await Category.findAll({
             where: {
                 id: id
             },
