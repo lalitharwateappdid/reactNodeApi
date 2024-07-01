@@ -52,7 +52,11 @@ exports.getByid = async (req, res) => {
     const { id } = req.query;
     
     try {
-        const categories = await Category.findAll(id, {
+        const categories = await Category.findAll({
+            where:{
+                id:id
+            }
+        }, {
             include: [
                 {
                     model: Category,
@@ -60,6 +64,8 @@ exports.getByid = async (req, res) => {
                     // through: { attributes: [] }, // Exclude attributes from join table
                     attributes: ['id'], // Select only the id column from related categories
                 }
+
+            
             ]
         });
 
