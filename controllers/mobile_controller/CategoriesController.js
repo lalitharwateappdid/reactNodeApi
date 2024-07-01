@@ -52,10 +52,14 @@ exports.getByid = async (req, res) => {
     const { id } = req.query;
     
     try {
-        let categories = await Category.findAll({
-            where: { categoryId:id }, // Filter by categoryId },
+        const categories = await Category.findByPk(categoryId, {
             include: [
-                { model: Category, as: 'relatedCategories' }
+                {
+                    model: Category,
+                    as: 'relatedCategories', // Alias for the related categories
+                    // through: { attributes: [] }, // Exclude attributes from join table
+                    attributes: ['id'], // Select only the id column from related categories
+                }
             ]
         });
 
