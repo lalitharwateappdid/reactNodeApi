@@ -38,16 +38,10 @@ exports.getRandom = async (req, res) => {
     try {
         // Fetch a random literature item
         const literature = await Literature.findOne({
-            include: [
-                {
-                    model: Category,
-                    
-                    as: 'category'
-                }
-            ],
-            order: db.literal('RAND()'), // For MySQL/MariaDB
-            // order: db.literal('RANDOM()'), // For PostgreSQL
-            // order: db.literal('RANDOM()'), // For SQLite
+            order: Sequelize.literal('RAND()'), // Order randomly (MySQL specific)
+            limit: 1, // Limit to 1 result
+            include: [{ model: Category, as: 'category' }]
+        
         });
 
         if (!literature) {
