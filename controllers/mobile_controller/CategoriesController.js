@@ -53,7 +53,7 @@ exports.getByid = async (req, res) => {
     
     try {
         // Fetch categories based on categoryId
-        let categories = await Category.findAll({
+        let categories = await Category.findOne({
             where: {
                 id: id
             },
