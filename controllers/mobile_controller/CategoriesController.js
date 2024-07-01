@@ -57,7 +57,7 @@ exports.getByid = async (req, res) => {
                 {
                     model: Category,
                    
-                    // as: 'literatures' // Alias for the included Literature model
+                    as: 'categories' // Alias for the included Literature model
                 }
             ]
         });
