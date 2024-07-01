@@ -4,7 +4,9 @@ const { Op } = require('sequelize');
 
 
 exports.get = async (req, res) => {
-    return "Hello"
+    res.json({
+        data:"Hello"
+    })
     
     try {
         const data = await Quote.findOne({
