@@ -4,7 +4,7 @@ const { Op } = require('sequelize');
 
 
 exports.get = async (req, res) => {
-    return "Hello"
+
     
     try {
         const data = await Quote.findOne({
@@ -24,4 +24,6 @@ exports.get = async (req, res) => {
             "message": "Error fetching data"
         })
     }
+
+    
 }

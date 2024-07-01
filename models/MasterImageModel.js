@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../database/database");
 
-const Category = sequelize.define("Categories", {
+const MasterImageModel = sequelize.define("MasterImage", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -26,7 +26,7 @@ const Category = sequelize.define("Categories", {
 });
 
 // Define self-referencing association (parent-child relationship)
-Category.hasMany(Category, { as: 'children', foreignKey: 'parentId' });
-Category.belongsTo(Category, { as: 'parent', foreignKey: 'parentId' });
+// Category.hasMany(Category, { as: 'children', foreignKey: 'parentId' });
+// Category.belongsTo(Category, { as: 'parent', foreignKey: 'parentId' });
 
-module.exports = Category;
+module.exports = MasterImageModel;

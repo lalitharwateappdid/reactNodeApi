@@ -28,7 +28,7 @@ const Quote = sequelize.define("quotes", {
     status:{
         type:DataTypes.BOOLEAN,
         defaultValue:true
-    }
+    },
 });
 
 module.exports = Quote
