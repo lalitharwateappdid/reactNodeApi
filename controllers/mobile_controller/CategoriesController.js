@@ -53,7 +53,7 @@ exports.getByid = async (req, res) => {
     
     try {
         let categories = await Category.findAll({
-            where: { parentId: id },
+            where: { categoryId:id }, // Filter by categoryId },
             include: [
                 { model: Category, as: 'relatedCategories' }
             ]
