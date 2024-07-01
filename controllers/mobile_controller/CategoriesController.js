@@ -53,9 +53,15 @@ exports.getByid = async (req, res) => {
     
     try {
         let categories = await Category.findAll({
-            // where: { parentId: id },
             include: [
-                { model: Category, as: 'relatedCategories' }
+                {
+                    model: Literature,
+                    through: {
+                        model: CategoryLiterature,
+                        where: { categoryId:id }, // Filter by categoryId }
+                    },
+                    as: 'literatures' // Alias for the included Literature model
+                }
             ]
         });
 
