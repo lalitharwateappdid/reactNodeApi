@@ -19,7 +19,7 @@ exports.get = async(req,res) => {
         });
     
         if (!literature || literature.length === 0) {
-          return res.status(404).json({ message: 'No literature found for the specified category' });
+          return res.status(400).json({ message: 'No literature found for the specified category' });
         }
     
         res.json({
